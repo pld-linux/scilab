@@ -1,0 +1,57 @@
+--- scilab-2.7/configure.in.orig	2004-07-06 00:36:48.000000000 +0200
++++ scilab-2.7/configure.in	2004-07-06 22:46:39.479802269 +0200
+@@ -571,6 +571,54 @@
+     fi
+     MAKEFILE_TARGET=Makefile.linux
+    ;;
++# AMD64 Linux
++  x86_64-*-linux-gnu)
++    GCC=yes
++    CC=cc
++    CC_OPTIONS="$CFLAGS -Dlinux -fwritable-strings -DNARROWPROTO"
++    CC_LDFLAGS=
++    CC_PICFLAGS=-fPIC
++    # find Fortran compiler
++    # g77 already asked and found: good
++    if test "$WITH_G77" = yes; then
++      FC=g77
++      FC_PICFLAGS=-fPIC
++    # option with-f2c
++    elif test "$with_f2c" = yes; then
++      AC_CHECK_PROG(F2C,f2c,yes,no)
++      if test "$F2C" = no; then
++        AC_MSG_ERROR([Unable to configure: f2c compiler not found])
++      fi
++      # script shell f77 have bugs, get ours
++      FC='${SCIDIR}/bin/f77-linux'
++    else
++      # first find g77
++      AC_CHECK_PROG(WITH_G77,g77,yes,no)
++      if test "$WITH_G77" = yes; then
++        FC=g77
++        FC_PICFLAGS=-fPIC
++      else
++      # otherwise find f2c
++        AC_CHECK_PROG(F2C,f2c,yes,no)
++        if test "$F2C" = yes; then
++          # script shell f77 have bugs, get ours
++          FC='${SCIDIR}/bin/f77-linux'
++        else
++          AC_MSG_ERROR([Unable to configure: no Fortran compiler found])    
++        fi
++      fi
++    fi
++    FC_OPTIONS=$CFLAGS
++    FC_OPTIONS_O0=
++    FC_LDFLAGS="-ldl -rdynamic"
++    LD=ld
++    LD_LDFLAGS=
++    if test "$enable_debug" = yes; then 
++      CC_OPTIONS='-g -Wall -Dlinux -fwritable-strings -DNARROWPROTO'
++      FC_OPTIONS=-g
++    fi
++    MAKEFILE_TARGET=Makefile.linux
++    ;;
+ # Alpha Linux
+   alpha-*-linux-gnu)
+     MALLOC=malloc.o
