@@ -1,0 +1,8 @@
+--- scilab-2.6/bin/dold	Thu Aug 30 12:19:32 2001
++++ scilab-2.6/bin/dold.patch	Thu Aug 30 12:19:13 2001
+@@ -1,4 +1,4 @@
+-#!/bin/sh5
++#!/bin/sh
+ OBJNM=/tmp/objnm$$
+ JMPTAB=/tmp/jmptab$$
+ #	Separons les .o des autres arguments
