@@ -63,7 +63,7 @@ Requires:	%{name} = %{version}-%{release}
 %description doc
 Documentation and demos for scilab.
 
-%description -l pl doc
+%description doc -l pl
 Dokumentacja i pliki demo dla scilab.
 
 %prep
