@@ -2,12 +2,12 @@ Summary:	Program for scientifical and technical computations, compatible with Ma
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
-Version:	2.6
-Release:	3
+Version:	2.7
+Release:	1
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{version}.src.tar.gz
-# Source0-md5:	32719c686f154ca0ddb02157b00c897e
+# Source0-md5:	e8aa1ede5efa20eeced284963d08bebb
 Source1:	%{name}.desktop
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
@@ -50,7 +50,9 @@ Linguagem de alto-nível para computação numérica.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
-	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_libdir}/X11/app-defaults,%{_libdir}/%{name}-%{version}/bin},%{_applnkdir}/Scientific/Numerics}
+	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_libdir}/X11/app-defaults} \
+	$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin \
+	$RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics/%{name}.desktop
 
