@@ -39,6 +39,7 @@ Linguagem de alto-nível para computação numérica.
 %patch2 -p1
 
 %build
+cp /usr/share/automake/config.sub .
 %{__autoconf}
 %configure \
 	--disable-static \
