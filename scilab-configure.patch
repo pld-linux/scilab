@@ -1,0 +1,26 @@
+--- scilab-2.5/configure.in~	Tue Dec 14 12:57:17 1999
++++ scilab-2.5/configure.in	Wed Feb 28 19:02:23 2001
+@@ -416,12 +416,12 @@
+     MAKEFILE_TARGET=Makefile.linux
+    ;;
+ # Linux ELF
+-  *-pc-linux-gnu)
++  *-pc-linux-gnu|i[[3456]]86-*-linux-gnu)
+     LIEEELIB=
+     AC_CHECK_LIB(ieee,main,
+       [LIEEELIB=-lieee])
+     CC=cc
+-    CC_OPTIONS='-O -Dlinux -fwritable-strings -DNARROWPROTO'
++    CC_OPTIONS="$CFLAGS -Dlinux -fwritable-strings -DNARROWPROTO"
+     CC_LDFLAGS=$LIEEELIB
+     # find Fortran compiler
+     # g77 already asked and found: good
+@@ -451,7 +451,7 @@
+         fi
+       fi
+     fi
+-    FC_OPTIONS=-O
++    FC_OPTIONS=$CFLAGS
+     FC_LDFLAGS="$LIEEELIB -ldl -rdynamic"
+     LD=ld
+     LD_LDFLAGS=$LIEEELIB
