@@ -1,12 +1,16 @@
 # TODO:
 # - added bcond with atlas
 #
+#
+# Conditional build:
+%bcond_without	gtk2		# without gtk2
+
 Summary:	Program for scientifical and technical computations, compatible with Matlab
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	3.0
-Release:	3.2
+Release:	3.3
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Scilab/distributions/%{name}-%{version}.src.tar.gz
@@ -83,7 +87,8 @@ cp -f /usr/share/automake/config.sub config
 	--with-tk \
 	--with-tk-library=%{_libdir} \
 	--with-xawd3d \
-	--with-gtk2
+%{?with_gtk2:--with-gtk2}
+
 %{__make} all
 
 %install
@@ -119,6 +124,7 @@ perl -pi -e 's#PVM_ROOT=\$SCI/pvm3#PVM_ROOT=%{_libdir}/%{name}-%{version}/pvm3#g
 	$RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/bin/scilab
 
 find $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/macros -name Makefile\* -exec rm -f {} \;
+find $RPM_BUILD_ROOT -name .cvsignore -exec rm -f {} \;
 
 mv $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/examples/ $RPM_BUILD_ROOT%{_examplesdir}/scilab
 
@@ -131,9 +137,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ACKNOWLEDGEMENTS license.txt README_Unix CHANGES
+%lang(fr) %doc licence.txt
 %attr(755,root,root) %{_bindir}/scilab
 %dir %{_prefix}/lib/%{name}-%{version}
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/libtool
+#%%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/libtool
 %dir %{_prefix}/lib/%{name}-%{version}/bin
 %dir %{_prefix}/lib/%{name}-%{version}/pvm3
 %{_prefix}/lib/%{name}-%{version}/bin/.scicos_pal
@@ -191,3 +198,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/%{name}-%{version}/demos
 %{_prefix}/lib/%{name}-%{version}/tests
 %attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/tests/*.sh
+#%%{_prefix}/lib/%{name}-%{version}/config
