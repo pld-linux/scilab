@@ -10,6 +10,7 @@ Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-sh5.patch
+Url:		http://www-rocq.inria.fr/scilab
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
