@@ -7,4 +7,5 @@ Icon=
 Exec=scilab
 Terminal=false
 Type=Application
+Categories=Education;Science;Math;
 # vi: encoding=utf-8
