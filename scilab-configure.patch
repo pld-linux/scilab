@@ -24,3 +24,20 @@
      FC_LDFLAGS="$LIEEELIB -ldl -rdynamic"
      LD=ld
      LD_LDFLAGS=$LIEEELIB
+@@ -1034,12 +1034,14 @@
+   [TERMCAPLIB=-ltermlib])
+ fi
+ if test "$TERMCAPLIB" = no; then
+-  AC_CHECK_LIB(curses,main,
+-  [TERMCAPLIB=-lcurses])
++  AC_CHECK_LIB(ncurses,main,
++  [TERMCAPLIB=-lncurses])
+ fi
+ 
+ if test "$TERMCAPLIB" != no; then
+   AC_DEFINE(HAVE_TERMCAP)
++  CC_OPTIONS="$CC_OPTIONS -I/usr/include/ncurses"
++  FC_OPTIONS="$FC_OPTIONS -I/usr/include/ncurses"
+ else
+   TERMCAPLIB=
+ fi
