@@ -52,25 +52,6 @@
      CC_LDFLAGS=$LIEEELIB
      CC_PICFLAGS=-fPIC
      # find Fortran compiler
-@@ -1115,11 +1115,16 @@
- #####################
- 
- AC_MSG_CHECKING([for use of sharpsign in CPP])
--AC_TRY_COMPILE([#define C2F(name) name##_],
--  [C2F(toto)()],  
-+saved_flags=$CFLAGS
-+CFLAGS="-o conftest. $CFLAGS"
-+AC_TRY_COMPILE([#define C2F(name) name ## _
-+C2F(toto)()
-+{}
-+],[],  
-   AC_MSG_RESULT(yes)
-   AC_DEFINE(USE_SHARP_SIGN),
-   AC_MSG_RESULT(no))
-+CFLAGS=$saved_flags
- 
- ##############################################################
- ## test for functions in standard C library and C math library
 @@ -1151,6 +1156,8 @@
  fi
  if test "$TERMCAPLIB" != no; then
