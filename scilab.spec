@@ -34,7 +34,7 @@ Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem.
 %patch2 -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure \
 	--disable-static \
 	--enable-shared \
