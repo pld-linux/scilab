@@ -55,7 +55,7 @@
 @@ -1115,11 +1115,16 @@
  #####################
  
- AC_MSG_CHECKING("for use of sharpsign in CPP")
+ AC_MSG_CHECKING([for use of sharpsign in CPP])
 -AC_TRY_COMPILE([#define C2F(name) name##_],
 -  [C2F(toto)()],  
 +saved_flags=$CFLAGS
@@ -71,14 +71,7 @@
  
  ##############################################################
  ## test for functions in standard C library and C math library
-@@ -1151,11 +1156,13 @@
-   [TERMCAPLIB=-ltermlib])
- fi
- if test "$TERMCAPLIB" = no; then
--  AC_CHECK_LIB(curses,main,
--  [TERMCAPLIB=-lcurses])
-+  AC_CHECK_LIB(ncurses,main,
-+  [TERMCAPLIB=-lncurses])
+@@ -1151,6 +1156,8 @@
  fi
  if test "$TERMCAPLIB" != no; then
    AC_DEFINE(HAVE_TERMCAP)

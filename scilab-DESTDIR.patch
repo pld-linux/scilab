@@ -7,21 +7,21 @@
 -	@if test `pwd` != ${LIBPREFIX}/$(SCIBASE); then \
 +	@if test `pwd` != ${DESTDIR}/${LIBPREFIX}/$(SCIBASE); then \
  		touch .binary; \
- 		strip $(SCIDIR)/bin/scilex; \
+ 		@STRIP@ $(SCIDIR)/bin/scilex; \
  		(cd tests; make distclean); \
  		(cd examples; make distclean); \
--		(cd .. ; tar cf - $(BINDISTFILES) | (cd ${LIBPREFIX}; tar xf -)); \
+-		(cd .. ; tar cf - $(BINDISTFILES) @PVMINST@ | (cd ${LIBPREFIX}; tar xf -)); \
 -		(cd ${LIBPREFIX}/$(SCIBASE); make); \
-+		(cd .. ; tar cf - $(BINDISTFILES) | (cd ${DESTDIR}/${LIBPREFIX}; tar xf -)); \
++		(cd .. ; tar cf - $(BINDISTFILES) @PVMINST@ | (cd ${DESTDIR}/${LIBPREFIX}; tar xf -)); \
 +		(cd ${DESTDIR}/${LIBPREFIX}/$(SCIBASE); make); \
  		$(RM) .binary; \
  	fi
--	$(RM) /usr/bin/scilab
--	ln -fs ${LIBPREFIX}/$(SCIBASE)/bin/scilab /usr/bin/scilab
--	$(RM) /usr/bin/intersci
--	ln -fs ${LIBPREFIX}/$(SCIBASE)/bin/intersci /usr/bin/intersci
--	$(RM) /usr/bin/intersci-n
--	ln -fs ${LIBPREFIX}/$(SCIBASE)/bin/intersci-n /usr/bin/intersci-n
+-	$(RM) @prefix@/bin/scilab
+-	ln -fs ${LIBPREFIX}/$(SCIBASE)/bin/scilab @prefix@/bin/scilab
+-	$(RM) @prefix@/bin/intersci
+-	ln -fs ${LIBPREFIX}/$(SCIBASE)/bin/intersci @prefix@/bin/intersci
+-	$(RM) @prefix@/bin/intersci-n
+-	ln -fs ${LIBPREFIX}/$(SCIBASE)/bin/intersci-n @prefix@/bin/intersci-n
 +	$(RM) ${DESTDIR}/@prefix@/bin/scilab
 +	ln -fs ../../..${LIBPREFIX}/$(SCIBASE)/bin/scilab ${DESTDIR}/@prefix@/bin/scilab
 +	$(RM) ${DESTDIR}/@prefix@/bin/intersci
@@ -29,13 +29,10 @@
 +	$(RM) /@prefix@/bin/intersci-n
 +	ln -fs ../../..${LIBPREFIX}/$(SCIBASE)/bin/intersci-n ${DESTDIR}/@prefix@/bin/intersci-n
  
+ 
  uninstall:
 -	$(RM) -r ${LIBPREFIX}/$(SCIBASE)
--	$(RM) /usr/bin/scilab
--	$(RM) /usr/bin/intersci
--	$(RM) /usr/bin/intersci-n
 +	$(RM) -r ${DESTDIR}/${LIBPREFIX}/$(SCIBASE)
-+	$(RM) /@prefix@/bin/scilab
-+	$(RM) /@prefix@/bin/intersci
-+	$(RM) /@prefix@/bin/intersci-n
- 
+ 	$(RM) @prefix@/bin/scilab
+ 	$(RM) @prefix@/bin/intersci
+ 	$(RM) @prefix@/bin/intersci-n
