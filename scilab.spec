@@ -54,14 +54,13 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin \
 	$RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics/%{name}.desktop
-
 %{__make} install \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	X11BASE=$RPM_BUILD_ROOT%{_prefix} \
 	BSD_INSTALL_DATA=/usr/bin/install
 
+install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics/%{name}.desktop
 install bin/xless $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin/xless
 mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/{X11_defaults,contrib,demos,macros,man,maple,routines,tcl,.binary,scilab*} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
