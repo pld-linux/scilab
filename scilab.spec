@@ -61,7 +61,6 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	BSD_INSTALL_DATA=/usr/bin/install
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics/%{name}.desktop
-install bin/xless $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin/xless
 mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/{X11_defaults,contrib,demos,macros,man,maple,routines,tcl,.binary,scilab*} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 
@@ -87,7 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ACKNOWLEDGEMENTS license.txt README
+%doc ACKNOWLEDGEMENTS license.txt README_Unix
 %attr(755,root,root) %{_bindir}/scilab
 %dir %{_libdir}/%{name}-%{version}
 %dir %{_libdir}/%{name}-%{version}/bin
