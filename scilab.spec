@@ -16,6 +16,7 @@ Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Scilab/distributions/%{name}-%{version}.src.tar.gz
 # Source0-md5:	d6fc5fe12519f99ccdd492c4ba96935a
 Source1:	%{name}.desktop
+Source2:	%{name}.png
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-sh5.patch
@@ -96,7 +97,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_appdefsdir}} \
 	$RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/bin \
-	$RPM_BUILD_ROOT%{_desktopdir}
+	$RPM_BUILD_ROOT%{_desktopdir} \
+	$RPM_BUILD_ROOT%{_pixmapsdir}
 
 %{__make} install \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
@@ -105,6 +107,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	BSD_INSTALL_DATA=/usr/bin/install
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
+install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
 mv -f $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/{X11_defaults,contrib,demos,macros,man,maple,routines,tcl,.binary,scilab*} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 
@@ -189,6 +192,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/scripts/sc*
 %{_prefix}/lib/%{name}-%{version}/util
 %{_desktopdir}/*
+%{_pixmapsdir}/%{name}.png
 
 %files doc
 %defattr(644,root,root,755)
