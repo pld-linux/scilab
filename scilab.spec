@@ -10,7 +10,7 @@ Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlab
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	3.0
-Release:	3.3
+Release:	4
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Scilab/distributions/%{name}-%{version}.src.tar.gz
@@ -38,6 +38,7 @@ BuildRequires:	readline-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	zlib-devel
+ExcludeArch:	amd64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
