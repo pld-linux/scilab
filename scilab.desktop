@@ -4,6 +4,6 @@ Comment=A powerful Matlab clone
 Comment[pl]=Rozbudowany klon Matlaba
 Icon=
 Exec=scilab
-Terminal=0
+Terminal=false
 Type=Application
 # vi: encoding=utf-8
