@@ -5,8 +5,6 @@ Version:	2.6
 Release:	1
 License:	distributable
 Group:		Applications/Math
-Group(de):	Applikationen/Mathematik
-Group(pl):	Aplikacje/Matematyczne
 Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{version}.src.tar.gz
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
