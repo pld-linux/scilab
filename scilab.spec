@@ -11,7 +11,7 @@ Source1:	%{name}.desktop
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-sh5.patch
-Url:		http://www-rocq.inria.fr/scilab
+Url:		http://www-rocq.inria.fr/scilab/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
