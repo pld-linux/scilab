@@ -3,7 +3,7 @@ Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlab
 Name:		scilab
 Version:	2.6
 Release:	1
-License:	Distributable
+License:	distributable
 Group:		Applications/Math
 Group(de):	Applikationen/Mathematik
 Group(pl):	Aplikacje/Matematyczne
