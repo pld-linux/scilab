@@ -3,10 +3,11 @@ Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlab
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	2.6
-Release:	2
+Release:	3
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{version}.src.tar.gz
+Source1:	%{name}.desktop
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-sh5.patch
@@ -50,7 +51,9 @@ Linguagem de alto-nível para computação numérica.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
-	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_libdir}/X11/app-defaults,%{_libdir}/%{name}-%{version}/bin}
+	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_libdir}/X11/app-defaults,%{_libdir}/%{name}-%{version}/bin},%{_applnkdir}/Scientific/Numerics}
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics
 
 %{__make} install \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
@@ -121,3 +124,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-%{version}/.binary
 %{_datadir}/%{name}-%{version}/scilab*
 %{_examplesdir}/scilab
+%{_applnkdir}/Scientific/Numerics/*
