@@ -7,6 +7,7 @@ Release:	3
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{version}.src.tar.gz
+# Source0-md5:	32719c686f154ca0ddb02157b00c897e
 Source1:	%{name}.desktop
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
