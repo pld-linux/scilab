@@ -49,6 +49,9 @@ Linguagem de alto-nível para computação numérica.
 %patch2 -p1
 %patch3 -p1
 
+# kill precompiled x86 objects
+rm -f examples/mex-examples/mexglx/{xtimesy.mexglx,*.so}
+
 head -n 424 aclocal.m4 > acinclude.m4
 
 %build
