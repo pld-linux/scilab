@@ -3,7 +3,7 @@ Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlab
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	2.7
-Release:	4
+Release:	5
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{version}.src.tar.gz
@@ -52,7 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_libdir}/X11/app-defaults} \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin \
-	$RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics
+	$RPM_BUILD_ROOT%{_desktopdir}
 
 %{__make} install \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
@@ -60,7 +60,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	X11BASE=$RPM_BUILD_ROOT%{_prefix} \
 	BSD_INSTALL_DATA=/usr/bin/install
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics/%{name}.desktop
+install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/{X11_defaults,contrib,demos,macros,man,maple,routines,tcl,.binary,scilab*} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 
@@ -126,4 +126,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-%{version}/.binary
 %{_datadir}/%{name}-%{version}/scilab*
 %{_examplesdir}/scilab
-%{_applnkdir}/Scientific/Numerics/*
+%{_desktopdir}/*
