@@ -1,31 +1,123 @@
---- scilab-2.6/configure.in	Tue Aug 21 05:05:17 2001
-+++ scilab-2.6/configure.in.patch	Tue Aug 21 05:34:52 2001
-@@ -472,13 +472,13 @@
-     MAKEFILE_TARGET=Makefile.linux
-    ;;
- # Linux ELF: all standard distributions
--  *-pc-linux-gnu)
-+  i*86-*-linux-gnu)
-     LIEEELIB=
-     AC_CHECK_LIB(ieee,main,
+diff -ur scilab-3.0.old/configure.in scilab-3.0/configure.in
+--- scilab-3.0.old/configure.in	2004-07-30 20:18:47.000000000 +0200
++++ scilab-3.0/configure.in	2004-07-30 21:09:25.000000000 +0200
+@@ -358,7 +358,7 @@
        [LIEEELIB=-lieee])
      GCC=yes
-     CC=cc
--    CC_OPTIONS='-O -Dlinux -fwritable-strings -DNARROWPROTO'
+     CC=gcc
+-    CC_OPTIONS='-O -Dlinux -fwritable-strings'
 +    CC_OPTIONS="$CFLAGS -Dlinux -fwritable-strings -DNARROWPROTO"
      CC_LDFLAGS=$LIEEELIB
      # find Fortran compiler
      # g77 already asked and found: good
-@@ -508,7 +508,7 @@
+@@ -388,7 +388,7 @@
          fi
        fi
      fi
 -    FC_OPTIONS=-O
-+    FC_OPTIONS=$CFLAGS
++    FC_OPTIONS="$CFLAGS"
      FC_OPTIONS_O0=
      FC_LDFLAGS="$LIEEELIB -ldl -rdynamic"
      LD=ld
-@@ -524,7 +524,7 @@
+@@ -403,7 +403,7 @@
+   sparc-*-sunos*)
+     # standard compilers
+     CC=cc
+-    CC_OPTIONS=-O
++    CC_OPTIONS="$CFLAGS"
+     CC_LDFLAGS=
+     CC_PICFLAGS=-PIC
+     if test "$WITH_G77" != yes; then    
+@@ -415,7 +415,7 @@
+       FC="$F77"
+     fi
+     #FC="$F77"
+-    FC_OPTIONS=-O
++    FC_OPTIONS="$CFLAGS"
+     FC_OPTIONS_O0=
+     FC_LDFLAGS=
+     FC_PICFLAGS=-PIC
+@@ -428,7 +428,7 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O
++      CC_OPTIONS="$CFLAGS"
+       CC_PICFLAGS=
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+@@ -436,7 +436,7 @@
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS="$CFLAGS"
+       FC_OPTIONS_O0=
+       FC_PICFLAGS=
+       if test "$enable_debug" = yes; then 
+@@ -552,10 +552,10 @@
+        GCC=no
+        CC=$ICC
+        FC=$IFC
+-       CC_OPTIONS='-O -Dlinux -DNARROWPROTO -mp -pc64 -ffnalias -falias '
++       CC_OPTIONS="$CFLAGS -Dlinux -DNARROWPROTO -mp -pc64 -ffnalias -falias"
+        CC_PICFLAGS="-fPIC"
+ # -cm remove comments displays, -w90  -w95 remove warnings abort f90 f95 non standard
+-       FC_OPTIONS="-O -cm -w90 -w95 -mp -pc64 -ffnalias -falias"
++       FC_OPTIONS="$CFLAGS -cm -w90 -w95 -mp -pc64 -ffnalias -falias"
+        FC_OPTIONS_O0="-cm  -w90 -w95 -mp -pc64 -ffnalias -falias"
+        if test "$enable_debug" = yes; then 
+          CC_OPTIONS='-g -Wall -Dlinux  -DNARROWPROTO  -mp -pc64 -ffnalias -falias'
+@@ -568,7 +568,7 @@
+     else
+        GCC=yes
+        CC=gcc
+-       CC_OPTIONS='-O -Dlinux -fwritable-strings -DNARROWPROTO'
++       CC_OPTIONS="$CFLAGS -Dlinux -fwritable-strings -DNARROWPROTO"
+        CC_LDFLAGS=$LIEEELIB
+        CC_PICFLAGS=-fPIC
+        # find Fortran compiler
+@@ -601,7 +601,7 @@
+            fi
+          fi
+        fi
+-       FC_OPTIONS=-O
++       FC_OPTIONS="$CFLAGS"
+        FC_OPTIONS_O0=
+        FC_LDFLAGS="$LIEEELIB -ldl -rdynamic"
+        if test "$enable_debug" = yes; then 
+@@ -623,10 +623,10 @@
+        GCC=no
+        CC=$ICC
+        FC=$IFC
+-       CC_OPTIONS='-O -Dlinux -DNARROWPROTO -mp'
++       CC_OPTIONS="$CFLAGS -Dlinux -DNARROWPROTO -mp"
+        CC_PICFLAGS="-fPIC"
+ # -cm remove comments displays, -w90  -w95 remove warnings abort f90 f95 non standard
+-       FC_OPTIONS="-O -cm -w90 -w95 -mp "
++       FC_OPTIONS="$CFLAGS -cm -w90 -w95 -mp "
+        FC_OPTIONS_O0="-cm  -w90 -w95 -mp "
+        if test "$enable_debug" = yes; then 
+          CC_OPTIONS='-g -Wall -Dlinux  -DNARROWPROTO  -mp '
+@@ -639,7 +639,7 @@
+     else
+        GCC=yes
+        CC=cc
+-       CC_OPTIONS='-O -Dlinux -fwritable-strings -DNARROWPROTO'
++       CC_OPTIONS="$CFLAGS -Dlinux -fwritable-strings -DNARROWPROTO"
+        CC_LDFLAGS=$LIEEELIB
+        CC_PICFLAGS=-fPIC
+        # find Fortran compiler
+@@ -672,7 +672,7 @@
+            fi
+          fi
+        fi
+-       FC_OPTIONS=-O
++       FC_OPTIONS="$CFLAGS"
+        FC_OPTIONS_O0=
+        FC_LDFLAGS="$LIEEELIB -ldl -rdynamic -Wl,-relax"
+        LD=ld
+@@ -689,7 +689,7 @@
      MALLOC=malloc.o
      GCC=yes
      CC=cc
@@ -34,7 +126,7 @@
      CC_LDFLAGS='-ldl -rdynamic -mieee-with-inexact'
      CC_PICFLAGS=-fPIC
      # find Fortran compiler
-@@ -555,7 +555,7 @@
+@@ -720,7 +720,7 @@
          fi
        fi
      fi
@@ -43,7 +135,7 @@
      FC_OPTIONS_O0='-mieee-with-inexact'
      FC_LDFLAGS='-ldl -rdynamic -mieee-with-inexact'
      LD=ld
-@@ -573,7 +573,7 @@
+@@ -738,7 +738,7 @@
        [LIEEELIB=-lieee])
      GCC=yes
      CC=cc
@@ -52,7 +144,16 @@
      CC_LDFLAGS=$LIEEELIB
      CC_PICFLAGS=-fPIC
      # find Fortran compiler
-@@ -1151,6 +1156,8 @@
+@@ -769,7 +769,7 @@
+         fi
+       fi
+     fi
+-    FC_OPTIONS=-O
++    FC_OPTIONS="$CFLAGS"
+     FC_OPTIONS_O0=
+     FC_LDFLAGS="$LIEEELIB -ldl -rdynamic"
+     FC_PICFLAGS=-fPIC
+@@ -1456,6 +1456,8 @@
  fi
  if test "$TERMCAPLIB" != no; then
    AC_DEFINE(HAVE_TERMCAP)
