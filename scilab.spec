@@ -135,6 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/%{name}-%{version}/scilab.star
 %dir %{_prefix}/lib/%{name}-%{version}/tcl
 %{_prefix}/lib/%{name}-%{version}/X11_defaults
+%dir %{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}/X11_defaults
 %{_datadir}/%{name}-%{version}/contrib
 %{_datadir}/%{name}-%{version}/demos
@@ -144,6 +145,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-%{version}/man
 %{_datadir}/%{name}-%{version}/maple
 %{_datadir}/%{name}-%{version}/routines
+%dir %{_datadir}/%{name}-%{version}/tcl
 %attr(755,root,root) %{_datadir}/%{name}-%{version}/tcl/browsehelpexe
 %{_datadir}/%{name}-%{version}/tcl/*.*
 %{_datadir}/%{name}-%{version}/tcl/Makefile
