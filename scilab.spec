@@ -1,9 +1,9 @@
 Summary:	Program for scientifical and technical computations, compatible with Matlab
-Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem.
+Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Name:		scilab
 Version:	2.6
 Release:	1
-Copyright:	distributable
+License:	Distributable
 Group:		Applications/Math
 Group(de):	Applikationen/Mathematik
 Group(pl):	Aplikacje/Matematyczne
@@ -11,19 +11,20 @@ Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-sh5.patch
-BuildRequires:	gcc-g77
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel
+BuildRequires:	autoconf
+BuildRequires:	gcc-g77
 BuildRequires:	tk-devel
 BuildRequires:	tcl-devel
 BuildRequires:	ncurses-devel
-BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr/X11R6
 
 %description
-Program for scientifical and technical computations, compatible with Matlab.
+Program for scientifical and technical computations, compatible with
+Matlab.
 
 %description -l pl
 Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem.
