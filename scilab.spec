@@ -16,10 +16,12 @@ URL:		http://www-rocq.inria.fr/scilab/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gcc-g77
+BuildRequires:	libtool
+BuildRequires:	ncurses-devel
 BuildRequires:	tk-devel
 BuildRequires:	tcl-devel
-BuildRequires:	ncurses-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -38,8 +40,12 @@ Linguagem de alto-nível para computação numérica.
 %patch1 -p1
 %patch2 -p1
 
+head -n 422 aclocal.m4 > acinclude.m4
+
 %build
-cp /usr/share/automake/config.sub .
+cp /usr/share/automake/config.sub config
+%{__libtoolize}
+%{__aclocal}
 %{__autoconf}
 %configure \
 	--disable-static \
