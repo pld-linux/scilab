@@ -21,7 +21,6 @@ BuildRequires:	tcl-devel
 BuildRequires:	ncurses-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_prefix		/usr/X11R6
 
 %description
 Program for scientifical and technical computations, compatible with
