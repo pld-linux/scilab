@@ -42,6 +42,8 @@ autoconf
 	--with-xawd3d
 %{__make} all
 
+gzip ACKNOWLEDGEMENTS license.txt README
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}}
@@ -73,8 +75,6 @@ perl -pi -e 's#PVM_ROOT=\$SCI/pvm3#PVM_ROOT=%{_libdir}/%{name}-%{version}/pvm3#g
 	$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin/scilab
 
 find $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/macros -name Makefile\* -exec rm -f {} \;
-
-gzip ACKNOWLEDGEMENTS license.txt README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
