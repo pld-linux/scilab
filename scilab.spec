@@ -1,5 +1,6 @@
 Summary:	Program for scientifical and technical computations, compatible with Matlab
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
+Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	2.6
 Release:	2
@@ -27,6 +28,9 @@ Matlab.
 %description -l pl
 Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem.
 
+%description -l pt_BR
+Linguagem de alto-nível para computação numérica.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -44,13 +48,13 @@ Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}}
-install -d $RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_libdir}/X11/app-defaults,%{_libdir}/%{name}-%{version},%{_libdir}/%{name}-%{version}/bin}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
+	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_libdir}/X11/app-defaults,%{_libdir}/%{name}-%{version}/bin}
 
 %{__make} install \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT \
-X11BASE=$RPM_BUILD_ROOT%{_prefix} \
+	X11BASE=$RPM_BUILD_ROOT%{_prefix} \
 	BSD_INSTALL_DATA=/usr/bin/install
 
 install bin/xless $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin/xless
