@@ -10,7 +10,7 @@ Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlab
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	3.0
-Release:	4
+Release:	5
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Scilab/distributions/%{name}-%{version}.src.tar.gz
@@ -42,6 +42,7 @@ ExcludeArch:	amd64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
+%define		_noautocompressdoc *.xml *.xsl *hh? *dtd
 
 %description
 Program for scientifical and technical computations, compatible with
@@ -115,7 +116,7 @@ mv -f $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/{X11_defaults,contrib,dem
 ln -fs %{_datadir}/%{name}-%{version}/contrib $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/contrib
 ln -fs %{_datadir}/%{name}-%{version}/demos $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/demos
 ln -fs %{_datadir}/%{name}-%{version}/macros $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/macros
-ln -fs %{_datadir}/%{name}-%{version}/man $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/man
+ln -fs %{_defaultdocdir}/%{name}-doc-%{version} $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/man
 ln -fs %{_datadir}/%{name}-%{version}/maple $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/maple
 ln -fs %{_datadir}/%{name}-%{version}/routines $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/routines
 ln -fs %{_datadir}/%{name}-%{version}/scilab.star $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/scilab.star
@@ -129,6 +130,7 @@ perl -pi -e 's#PVM_ROOT=\$SCI/pvm3#PVM_ROOT=%{_libdir}/%{name}-%{version}/pvm3#g
 
 find $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/macros -name Makefile\* -exec rm -f {} \;
 find $RPM_BUILD_ROOT -name .cvsignore -exec rm -f {} \;
+find man -name .cvsignore -exec rm -f {} \;
 
 mv $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/examples/ $RPM_BUILD_ROOT%{_examplesdir}/scilab
 
