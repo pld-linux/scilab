@@ -2,7 +2,7 @@ Summary:	Program for scientifical and technical computations, compatible with Ma
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Name:		scilab
 Version:	2.6
-Release:	1
+Release:	2
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{version}.src.tar.gz
@@ -42,8 +42,6 @@ Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem.
 	--with-xawd3d
 %{__make} all
 
-gzip ACKNOWLEDGEMENTS license.txt README
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}}
@@ -81,7 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc ACKNOWLEDGEMENTS license.txt README
 %attr(755,root,root) %{_bindir}/scilab
 %dir %{_libdir}/%{name}-%{version}
 %dir %{_libdir}/%{name}-%{version}/bin
