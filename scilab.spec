@@ -3,7 +3,7 @@ Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlab
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	2.7
-Release:	3
+Release:	4
 License:	distributable
 Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{version}.src.tar.gz
@@ -108,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}-%{version}/routines
 %{_libdir}/%{name}-%{version}/scilab.quit
 %{_libdir}/%{name}-%{version}/scilab.star
-%{_libdir}/%{name}-%{version}/tcl
+%dir %{_libdir}/%{name}-%{version}/tcl
 %{_libdir}/%{name}-%{version}/X11_defaults
 %{_datadir}/%{name}-%{version}/X11_defaults
 %{_datadir}/%{name}-%{version}/contrib
@@ -119,7 +119,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-%{version}/man
 %{_datadir}/%{name}-%{version}/maple
 %{_datadir}/%{name}-%{version}/routines
-%{_datadir}/%{name}-%{version}/tcl
+%attr(755,root,root) %{_datadir}/%{name}-%{version}/tcl/browsehelpexe
+%{_datadir}/%{name}-%{version}/tcl/*.*
+%{_datadir}/%{name}-%{version}/tcl/Makefile
+%{_datadir}/%{name}-%{version}/tcl/words
 %{_datadir}/%{name}-%{version}/.binary
 %{_datadir}/%{name}-%{version}/scilab*
 %{_examplesdir}/scilab
