@@ -53,7 +53,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_libdir}/X11/app-defaults,%{_libdir}/%{name}-%{version}/bin},%{_applnkdir}/Scientific/Numerics}
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics
+install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/Scientific/Numerics/%{name}.desktop
 
 %{__make} install \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
