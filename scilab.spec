@@ -10,9 +10,9 @@ Group:		Applications/Math
 Source0:	ftp://ftp.inria.fr/INRIA/Scilab/release_candidate/Scilab-%{version}-RC1.src.tar.gz
 # Source0-md5:	698341a25b478649883278a830afab18
 Source1:	%{name}.desktop
-Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-sh5.patch
-URL:		http://www-rocq.inria.fr/scilab/
+Patch1:         %{name}-DESTDIR.patch
+Patch2:         %{name}-sh5.patch
+URL:		http://scilabsoft.inria.fr/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
