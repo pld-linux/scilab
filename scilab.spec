@@ -2,12 +2,12 @@ Summary:	Program for scientifical and technical computations, compatible with Ma
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
-Version:	2.7
-Release:	6
+Version:	3.0
+Release:	0.1
 License:	distributable
 Group:		Applications/Math
-Source0:	ftp://ftp.inria.fr/INRIA/Projects/Meta2/Scilab/distributions/%{name}-%{version}.src.tar.gz
-# Source0-md5:	e8aa1ede5efa20eeced284963d08bebb
+Source0:	ftp://ftp.inria.fr/INRIA/Scilab/distributions/%{name}-%{version}.src.tar.gz
+# Source0-md5:	d6fc5fe12519f99ccdd492c4ba96935a
 Source1:	%{name}.desktop
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
@@ -19,10 +19,15 @@ BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gcc-g77
+BuildRequires:	libgtkhtml-devel
 BuildRequires:	libtool
 BuildRequires:	ncurses-devel
+BuildRequires:	sablotron
+BuildRequires:	pango-devel
 BuildRequires:	tk-devel
 BuildRequires:	tcl-devel
+BuildRequires:	libzvt-devel
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
@@ -44,7 +49,7 @@ Linguagem de alto-nível para computação numérica.
 %patch2 -p1
 %patch3 -p1
 
-head -n 422 aclocal.m4 > acinclude.m4
+head -n 424 aclocal.m4 > acinclude.m4
 
 %build
 cp -f /usr/share/automake/config.sub config
@@ -57,7 +62,8 @@ cp -f /usr/share/automake/config.sub config
 	--with-tcl-library=%{_libdir} \
 	--with-tk \
 	--with-tk-library=%{_libdir} \
-	--with-xawd3d
+	--with-xawd3d \
+	--with-gtk2
 %{__make} all
 
 %install
@@ -94,6 +100,8 @@ perl -pi -e 's#PVM_ROOT=\$SCI/pvm3#PVM_ROOT=%{_libdir}/%{name}-%{version}/pvm3#g
 
 find $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/macros -name Makefile\* -exec rm -f {} \;
 
+mv $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/examples/ $RPM_BUILD_ROOT%{_examplesdir}/scilab
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -115,6 +123,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/pvm3/*
 %{_prefix}/lib/%{name}-%{version}/contrib
 %{_prefix}/lib/%{name}-%{version}/demos
+%{_prefix}/lib/%{name}-%{version}/imp
 %{_prefix}/lib/%{name}-%{version}/macros
 %{_prefix}/lib/%{name}-%{version}/man
 %{_prefix}/lib/%{name}-%{version}/maple
@@ -135,6 +144,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_datadir}/%{name}-%{version}/tcl/browsehelpexe
 %{_datadir}/%{name}-%{version}/tcl/*.*
 %{_datadir}/%{name}-%{version}/tcl/Makefile
+%{_datadir}/%{name}-%{version}/tcl/ged
+%{_datadir}/%{name}-%{version}/tcl/sciGUI
+%{_datadir}/%{name}-%{version}/tcl/scipadsources
+%{_datadir}/%{name}-%{version}/tcl/utils
 %{_datadir}/%{name}-%{version}/tcl/words
 %{_datadir}/%{name}-%{version}/.binary
 %{_datadir}/%{name}-%{version}/scilab*
