@@ -19,15 +19,16 @@ BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gcc-g77
-BuildRequires:	libgtkhtml-devel
+BuildRequires:	libgtkhtml-devel >= 2.0
 BuildRequires:	libtool
+BuildRequires:	libzvt-devel >= 2.0
 BuildRequires:	ncurses-devel
 BuildRequires:	sablotron
 BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
-BuildRequires:	tk-devel
+BuildRequires:	readline-devel
 BuildRequires:	tcl-devel
-BuildRequires:	libzvt-devel
+BuildRequires:	tk-devel
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
