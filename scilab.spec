@@ -9,12 +9,12 @@ Summary:	Program for scientifical and technical computations, compatible with Ma
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
-Version:	3.0
-Release:	5
+Version:	3.1
+Release:	0.1
 License:	distributable
 Group:		Applications/Math
-Source0:	ftp://ftp.inria.fr/INRIA/Scilab/distributions/%{name}-%{version}.src.tar.gz
-# Source0-md5:	d6fc5fe12519f99ccdd492c4ba96935a
+Source0:	http://scilabsoft.inria.fr/download/stable/%{name}-%{version}-src.tar.gz
+# Source0-md5:	b4973d0d700b47fe7f3608753203cd73
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-configure.patch
@@ -38,7 +38,6 @@ BuildRequires:	readline-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	zlib-devel
-ExcludeArch:	amd64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_appdefsdir	/usr/X11R6/lib/X11/app-defaults
@@ -68,15 +67,14 @@ Dokumentacja i pliki demo dla scilab.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 
-# kill precompiled x86 objects
-rm -f examples/mex-examples/mexglx/{xtimesy.mexglx,*.so}
-
-head -n 424 aclocal.m4 > acinclude.m4
+head -n 438 aclocal.m4 > acinclude.m4
+tail -n 68 aclocal.m4 >>acinclude.m4
+sed -e 's@-march=athlon64@@g' -i configure.in
 
 %build
 cp -f /usr/share/automake/config.sub config
@@ -123,6 +121,7 @@ ln -fs %{_datadir}/%{name}-%{version}/scilab.star $RPM_BUILD_ROOT%{_prefix}/lib/
 ln -fs %{_datadir}/%{name}-%{version}/scilab.quit $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/scilab.quit
 ln -fs %{_datadir}/%{name}-%{version}/tcl $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/tcl
 ln -fs %{_datadir}/%{name}-%{version}/X11_defaults $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/X11_defaults
+ln -fs %{_libdir}/%{name}-%{version}/bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
 
 find $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/bin -type f | xargs perl -pi -e "s#$RPM_BUILD_ROOT##g"
 perl -pi -e 's#PVM_ROOT=\$SCI/pvm3#PVM_ROOT=%{_libdir}/%{name}-%{version}/pvm3#g' \
@@ -175,6 +174,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/%{name}-%{version}/macros
 %{_datadir}/%{name}-%{version}/macros/[a-z]*
 %{_datadir}/%{name}-%{version}/macros/*.c
+%{_datadir}/%{name}-%{version}/macros/HighLevelPlotting
 %{_datadir}/%{name}-%{version}/maple
 %{_datadir}/%{name}-%{version}/routines
 %dir %{_datadir}/%{name}-%{version}/tcl
@@ -187,7 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-%{version}/tcl/sciGUI
 %{_datadir}/%{name}-%{version}/tcl/scipadsources
 %{_datadir}/%{name}-%{version}/tcl/utils
-%{_datadir}/%{name}-%{version}/tcl/words
+# %{_datadir}/%{name}-%{version}/tcl/words
 %{_datadir}/%{name}-%{version}/.binary
 %{_datadir}/%{name}-%{version}/scilab*
 %dir %{_prefix}/lib/%{name}-%{version}/scripts
@@ -203,6 +203,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc man/eng man/*.dtd
 %{_examplesdir}/scilab
 %{_prefix}/lib/%{name}-%{version}/demos
-%{_prefix}/lib/%{name}-%{version}/tests
+%dir %{_prefix}/lib/%{name}-%{version}/tests
+%{_prefix}/lib/%{name}-%{version}/tests/*.sce
+%{_prefix}/lib/%{name}-%{version}/tests/*.ref
+%{_prefix}/lib/%{name}-%{version}/tests/*.tst
 %attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/tests/*.sh
 #%%{_prefix}/lib/%{name}-%{version}/config
