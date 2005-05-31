@@ -9,12 +9,12 @@ Summary:	Program for scientifical and technical computations, compatible with Ma
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
-Version:	3.1
+Version:	3.1.1
 Release:	0.1
 License:	distributable
 Group:		Applications/Math
 Source0:	http://scilabsoft.inria.fr/download/stable/%{name}-%{version}-src.tar.gz
-# Source0-md5:	b4973d0d700b47fe7f3608753203cd73
+# Source0-md5:	8bd6e750681fc6b2f524b46876dc0887
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-configure.patch
