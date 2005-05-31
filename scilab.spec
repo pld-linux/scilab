@@ -1,6 +1,8 @@
 # TODO:
 # - added bcond with atlas
-#
+# - make demos works (doesn't see SCI path)
+# - use system pvm
+# - amd64 version(problem with -fPIC)
 #
 # Conditional build:
 %bcond_without	gtk2		# without gtk2
@@ -31,12 +33,14 @@ BuildRequires:	libgtkhtml-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	libzvt-devel >= 2.0
 BuildRequires:	ncurses-devel
+BuildRequires:	ocaml
 BuildRequires:	sablotron
 BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
+BuildRequires:	vte-devel
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -75,6 +79,7 @@ Dokumentacja i pliki demo dla scilab.
 head -n 438 aclocal.m4 > acinclude.m4
 tail -n 68 aclocal.m4 >>acinclude.m4
 sed -e 's@-march=athlon64@@g' -i configure.in
+sed -e 's@$PVMROOT/lib/pvmgetarch@%{_bindir}/pvmgetarch@g' -i configure.in
 
 %build
 cp -f /usr/share/automake/config.sub config
@@ -88,6 +93,11 @@ cp -f /usr/share/automake/config.sub config
 	--with-tk \
 	--with-tk-library=%{_libdir} \
 	--with-xawd3d \
+	--without-java \
+	--with-ocaml \
+	--with-pvm \
+	--with-pvm-include=%{_includedir} \
+	--with-pvm-library=%{_libdir} \
 %{?with_gtk2:--with-gtk2}
 
 %{__make} all
@@ -104,6 +114,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	PREFIX=$RPM_BUILD_ROOT%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	X11BASE=$RPM_BUILD_ROOT%{_prefix} \
+	SCIDIR=$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version} \
 	BSD_INSTALL_DATA=/usr/bin/install
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
@@ -121,7 +132,9 @@ ln -fs %{_datadir}/%{name}-%{version}/scilab.star $RPM_BUILD_ROOT%{_prefix}/lib/
 ln -fs %{_datadir}/%{name}-%{version}/scilab.quit $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/scilab.quit
 ln -fs %{_datadir}/%{name}-%{version}/tcl $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/tcl
 ln -fs %{_datadir}/%{name}-%{version}/X11_defaults $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/X11_defaults
-ln -fs %{_libdir}/%{name}-%{version}/bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
+
+# fix links
+ln -fs %{_libdir}/%{name}-%{version}/bin/{%{name},intersci,intersci-n} $RPM_BUILD_ROOT%{_bindir}/
 
 find $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/bin -type f | xargs perl -pi -e "s#$RPM_BUILD_ROOT##g"
 perl -pi -e 's#PVM_ROOT=\$SCI/pvm3#PVM_ROOT=%{_libdir}/%{name}-%{version}/pvm3#g' \
