@@ -37,6 +37,7 @@ BuildRequires:	ocaml
 BuildRequires:	sablotron
 BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
+BuildRequires:	pvm-devel
 BuildRequires:	readline-devel
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
@@ -100,7 +101,7 @@ cp -f /usr/share/automake/config.sub config
 	--with-pvm-library=%{_libdir} \
 %{?with_gtk2:--with-gtk2}
 
-%{__make} all
+%{__make} -j1 all
 
 %install
 rm -rf $RPM_BUILD_ROOT
