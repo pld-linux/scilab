@@ -1,0 +1,80 @@
+--- ./Makefile.in~	2005-09-19 09:54:51.000000000 +0300
++++ ./Makefile.in	2005-09-19 09:55:23.000000000 +0300
+@@ -112,13 +112,13 @@
+ 
+ PVMBINDISTFILES = \
+ 	$(SCIBASE)/pvm3/Readme \
+-	$(SCIBASE)/pvm3/lib/pvm \
+-	$(SCIBASE)/pvm3/lib/pvmd \
+-	$(SCIBASE)/pvm3/lib/pvmtmparch \
+-	$(SCIBASE)/pvm3/lib/pvmgetarch \
+-	$(SCIBASE)/pvm3/lib/@PVMARCH@/pvmd3 \
+-	$(SCIBASE)/pvm3/lib/@PVMARCH@/pvmgs \
+-	$(SCIBASE)/pvm3/lib/@PVMARCH@/pvm \
++	$(SCIBASE)/pvm3/lib64/pvm \
++	$(SCIBASE)/pvm3/lib64/pvmd \
++	$(SCIBASE)/pvm3/lib64/pvmtmparch \
++	$(SCIBASE)/pvm3/lib64/pvmgetarch \
++	$(SCIBASE)/pvm3/lib64/@PVMARCH@/pvmd3 \
++	$(SCIBASE)/pvm3/lib64/@PVMARCH@/pvmgs \
++	$(SCIBASE)/pvm3/lib64/@PVMARCH@/pvm \
+ 	$(SCIBASE)/pvm3/bin/@PVMARCH@/*
+ 
+ BINDISTFILES = \
+@@ -188,7 +188,7 @@
+ 
+ #-------------------------------------------------
+ # installation 
+-# Scilab is installed in $(PREFIX)/lib/SCIBASE
++# Scilab is installed in $(PREFIX)/lib64/SCIBASE
+ # with links in $(PREFIX)/bin/
+ # PREFIX is set by in configure --prefix= option 
+ # -----------------------------------------------
+@@ -198,13 +198,13 @@
+ 
+ INSTPVMBINDISTFILES = \
+ 	pvm3/Readme \
+-	pvm3/lib/pvm \
+-	pvm3/lib/pvmd \
+-	pvm3/lib/pvmtmparch \
+-	pvm3/lib/pvmgetarch \
+-	pvm3/lib/@PVMARCH@/pvmd3 \
+-	pvm3/lib/@PVMARCH@/pvmgs \
+-	pvm3/lib/@PVMARCH@/pvm \
++	pvm3/lib64/pvm \
++	pvm3/lib64/pvmd \
++	pvm3/lib64/pvmtmparch \
++	pvm3/lib64/pvmgetarch \
++	pvm3/lib64/@PVMARCH@/pvmd3 \
++	pvm3/lib64/@PVMARCH@/pvmgs \
++	pvm3/lib64/@PVMARCH@/pvm \
+ 	pvm3/bin/@PVMARCH@/*
+ 
+ INSTBINDISTFILES = \
+@@ -262,20 +262,20 @@
+ 
+ install:
+ 	@if test `pwd`/..  != $(PREFIX)/lib ; then \
+-		install -d $(PREFIX)/lib/$(SCIBASE); \
+-		( tar cf - $(INSTBINDISTFILES) @PVMINST1@  | (cd $(PREFIX)/lib/$(SCIBASE) ; tar xf -)); \
+-		(cd $(PREFIX)/lib/$(SCIBASE);touch .binary; make postinstall PREFIX=$(PREFIX) ) \
++		install -d $(PREFIX)/lib64/$(SCIBASE); \
++		( tar cf - $(INSTBINDISTFILES) @PVMINST1@  | (cd $(PREFIX)/lib64/$(SCIBASE) ; tar xf -)); \
++		(cd $(PREFIX)/lib64/$(SCIBASE);touch .binary; make postinstall PREFIX=$(PREFIX) ) \
+ 	fi
+ 	install -d $(PREFIX)/share/doc/$(DOCNAME)/
+ 	install ACKNOWLEDGEMENTS CHANGES README_Unix Version.incl \
+ 		licence.txt license.txt  $(PREFIX)/share/doc/$(DOCNAME)
+ 	install -d $(PREFIX)/bin 
+ 	$(RM)  $(PREFIX)/bin/scilab
+-	ln -fs $(PREFIX)/lib/$(SCIBASE)/bin/scilab $(PREFIX)/bin/scilab
++	ln -fs $(PREFIX)/lib64/$(SCIBASE)/bin/scilab $(PREFIX)/bin/scilab
+ 	$(RM)  $(PREFIX)/bin/intersci
+-	ln -fs $(PREFIX)/lib/$(SCIBASE)/bin/intersci $(PREFIX)/bin/intersci
++	ln -fs $(PREFIX)/lib64/$(SCIBASE)/bin/intersci $(PREFIX)/bin/intersci
+ 	$(RM)  $(PREFIX)/bin/intersci-n
+-	ln -fs $(PREFIX)/lib/$(SCIBASE)/bin/intersci-n $(PREFIX)/bin/intersci-n
++	ln -fs $(PREFIX)/lib64/$(SCIBASE)/bin/intersci-n $(PREFIX)/bin/intersci-n
+ 
+ # DESTDIR is the final destination of the file 
+ # it can be different from $(PREFIX)/lib

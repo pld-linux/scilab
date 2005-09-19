@@ -1,0 +1,14 @@
+--- ./Makefile.in~	2005-09-19 09:54:47.000000000 +0300
++++ ./Makefile.in	2005-09-19 09:54:51.000000000 +0300
+@@ -272,9 +272,9 @@
+ 	install -d $(PREFIX)/bin 
+ 	$(RM)  $(PREFIX)/bin/scilab
+ 	ln -fs $(PREFIX)/lib/$(SCIBASE)/bin/scilab $(PREFIX)/bin/scilab
+-	$(RM)  $(PREFIX)$/bin/intersciXXX
++	$(RM)  $(PREFIX)/bin/intersci
+ 	ln -fs $(PREFIX)/lib/$(SCIBASE)/bin/intersci $(PREFIX)/bin/intersci
+-	$(RM)  $(PREFIX)$/bin/intersci-n
++	$(RM)  $(PREFIX)/bin/intersci-n
+ 	ln -fs $(PREFIX)/lib/$(SCIBASE)/bin/intersci-n $(PREFIX)/bin/intersci-n
+ 
+ # DESTDIR is the final destination of the file 
