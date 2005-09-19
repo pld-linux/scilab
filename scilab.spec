@@ -23,6 +23,8 @@ Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-sh5.patch
 Patch3:		%{name}-amd64.patch
+Patch4:		%{name}-typo.patch
+Patch5:		%{name}-lib64.patch
 URL:		http://www-rocq.inria.fr/scilab/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel
@@ -76,6 +78,10 @@ Dokumentacja i pliki demo dla scilab.
 #%patch1 -p1
 %patch2 -p1
 #%patch3 -p1
+%if %{_lib} == "lib64"
+%patch4 -p1
+%endif
+%patch5 -p1
 
 head -n 438 aclocal.m4 > acinclude.m4
 tail -n 68 aclocal.m4 >>acinclude.m4
@@ -107,7 +113,7 @@ cp -f /usr/share/automake/config.sub config
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_appdefsdir}} \
-	$RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/bin \
+	$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin \
 	$RPM_BUILD_ROOT%{_desktopdir} \
 	$RPM_BUILD_ROOT%{_pixmapsdir}
 
@@ -120,26 +126,26 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
-mv -f $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/{X11_defaults,contrib,demos,macros,man,maple,routines,tcl,.binary,scilab*} \
+mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/{X11_defaults,contrib,demos,macros,man,maple,routines,tcl,.binary,scilab*} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 
-ln -fs %{_datadir}/%{name}-%{version}/contrib $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/contrib
-ln -fs %{_datadir}/%{name}-%{version}/demos $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/demos
-ln -fs %{_datadir}/%{name}-%{version}/macros $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/macros
-ln -fs %{_defaultdocdir}/%{name}-doc-%{version} $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/man
-ln -fs %{_datadir}/%{name}-%{version}/maple $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/maple
-ln -fs %{_datadir}/%{name}-%{version}/routines $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/routines
-ln -fs %{_datadir}/%{name}-%{version}/scilab.star $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/scilab.star
-ln -fs %{_datadir}/%{name}-%{version}/scilab.quit $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/scilab.quit
-ln -fs %{_datadir}/%{name}-%{version}/tcl $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/tcl
-ln -fs %{_datadir}/%{name}-%{version}/X11_defaults $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/X11_defaults
+ln -fs %{_datadir}/%{name}-%{version}/contrib $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/contrib
+ln -fs %{_datadir}/%{name}-%{version}/demos $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/demos
+ln -fs %{_datadir}/%{name}-%{version}/macros $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/macros
+ln -fs %{_docdir}/%{name}-doc-%{version} $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/man
+ln -fs %{_datadir}/%{name}-%{version}/maple $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/maple
+ln -fs %{_datadir}/%{name}-%{version}/routines $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/routines
+ln -fs %{_datadir}/%{name}-%{version}/scilab.star $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/scilab.star
+ln -fs %{_datadir}/%{name}-%{version}/scilab.quit $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/scilab.quit
+ln -fs %{_datadir}/%{name}-%{version}/tcl $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/tcl
+ln -fs %{_datadir}/%{name}-%{version}/X11_defaults $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/X11_defaults
 
 # fix links
 ln -fs %{_libdir}/%{name}-%{version}/bin/{%{name},intersci,intersci-n} $RPM_BUILD_ROOT%{_bindir}/
 
-find $RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/bin -type f | xargs perl -pi -e "s#$RPM_BUILD_ROOT##g"
+find $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin -type f | xargs perl -pi -e "s#$RPM_BUILD_ROOT##g"
 perl -pi -e 's#PVM_ROOT=\$SCI/pvm3#PVM_ROOT=%{_libdir}/%{name}-%{version}/pvm3#g' \
-	$RPM_BUILD_ROOT%{_prefix}/lib/%{name}-%{version}/bin/scilab
+	$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin/scilab
 
 find $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/macros -name Makefile\* -exec rm -f {} \;
 find $RPM_BUILD_ROOT -name .cvsignore -exec rm -f {} \;
@@ -158,29 +164,29 @@ rm -rf $RPM_BUILD_ROOT
 %doc ACKNOWLEDGEMENTS license.txt README_Unix CHANGES
 %lang(fr) %doc licence.txt
 %attr(755,root,root) %{_bindir}/scilab
-%dir %{_prefix}/lib/%{name}-%{version}
-#%%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/libtool
-%dir %{_prefix}/lib/%{name}-%{version}/bin
-%dir %{_prefix}/lib/%{name}-%{version}/pvm3
-%{_prefix}/lib/%{name}-%{version}/bin/.scicos_pal
-%{_prefix}/lib/%{name}-%{version}/bin/Blatdoc
-%{_prefix}/lib/%{name}-%{version}/bin/Blatdocs
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/bin/BEpsf
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/bin/Blatexpr*
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/bin/Blpr
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/bin/S*
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/bin/[a-z]*
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/pvm3/*
-%{_prefix}/lib/%{name}-%{version}/contrib
-%{_prefix}/lib/%{name}-%{version}/imp
-%{_prefix}/lib/%{name}-%{version}/macros
-%{_prefix}/lib/%{name}-%{version}/man
-%{_prefix}/lib/%{name}-%{version}/maple
-%{_prefix}/lib/%{name}-%{version}/routines
-%{_prefix}/lib/%{name}-%{version}/scilab.quit
-%{_prefix}/lib/%{name}-%{version}/scilab.star
-%dir %{_prefix}/lib/%{name}-%{version}/tcl
-%{_prefix}/lib/%{name}-%{version}/X11_defaults
+%dir %{_libdir}/%{name}-%{version}
+#%%attr(755,root,root) %{_libdir}/%{name}-%{version}/libtool
+%dir %{_libdir}/%{name}-%{version}/bin
+%dir %{_libdir}/%{name}-%{version}/pvm3
+%{_libdir}/%{name}-%{version}/bin/.scicos_pal
+%{_libdir}/%{name}-%{version}/bin/Blatdoc
+%{_libdir}/%{name}-%{version}/bin/Blatdocs
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/BEpsf
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/Blatexpr*
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/Blpr
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/S*
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/[a-z]*
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/pvm3/*
+%{_libdir}/%{name}-%{version}/contrib
+%{_libdir}/%{name}-%{version}/imp
+%{_libdir}/%{name}-%{version}/macros
+%{_libdir}/%{name}-%{version}/man
+%{_libdir}/%{name}-%{version}/maple
+%{_libdir}/%{name}-%{version}/routines
+%{_libdir}/%{name}-%{version}/scilab.quit
+%{_libdir}/%{name}-%{version}/scilab.star
+%dir %{_libdir}/%{name}-%{version}/tcl
+%{_libdir}/%{name}-%{version}/X11_defaults
 %dir %{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}/X11_defaults
 %{_datadir}/%{name}-%{version}/contrib
@@ -204,10 +210,10 @@ rm -rf $RPM_BUILD_ROOT
 # %{_datadir}/%{name}-%{version}/tcl/words
 %{_datadir}/%{name}-%{version}/.binary
 %{_datadir}/%{name}-%{version}/scilab*
-%dir %{_prefix}/lib/%{name}-%{version}/scripts
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/scripts/B*
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/scripts/sc*
-%{_prefix}/lib/%{name}-%{version}/util
+%dir %{_libdir}/%{name}-%{version}/scripts
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/scripts/B*
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/scripts/sc*
+%{_libdir}/%{name}-%{version}/util
 %{_desktopdir}/*
 %{_pixmapsdir}/%{name}.png
 
@@ -216,10 +222,10 @@ rm -rf $RPM_BUILD_ROOT
 %lang(fr) %doc man/fr
 %doc man/eng man/*.dtd
 %{_examplesdir}/scilab
-%{_prefix}/lib/%{name}-%{version}/demos
-%dir %{_prefix}/lib/%{name}-%{version}/tests
-%{_prefix}/lib/%{name}-%{version}/tests/*.sce
-%{_prefix}/lib/%{name}-%{version}/tests/*.ref
-%{_prefix}/lib/%{name}-%{version}/tests/*.tst
-%attr(755,root,root) %{_prefix}/lib/%{name}-%{version}/tests/*.sh
-#%%{_prefix}/lib/%{name}-%{version}/config
+%{_libdir}/%{name}-%{version}/demos
+%dir %{_libdir}/%{name}-%{version}/tests
+%{_libdir}/%{name}-%{version}/tests/*.sce
+%{_libdir}/%{name}-%{version}/tests/*.ref
+%{_libdir}/%{name}-%{version}/tests/*.tst
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/tests/*.sh
+#%%{_libdir}/%{name}-%{version}/config
