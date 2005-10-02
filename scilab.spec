@@ -25,7 +25,7 @@ Patch2:		%{name}-sh5.patch
 Patch3:		%{name}-amd64.patch
 Patch4:		%{name}-typo.patch
 Patch5:		%{name}-lib64.patch
-URL:		http://www-rocq.inria.fr/scilab/
+URL:		http://www.scilab.org/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
