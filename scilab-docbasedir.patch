@@ -1,0 +1,43 @@
+--- scilab-3.1.1.orig/macros/util/xmltohtml.sci.orig	2005-11-29 19:31:59.000000000 +0100
++++ scilab-3.1.1/macros/util/xmltohtml.sci	2005-11-29 22:14:17.000000000 +0100
+@@ -203,6 +203,7 @@
+     dirs=basename(%helps(:,1))
+     txt=%helps(:,2)
+   end
++  basepath=dirname(path)+"/";
+        
+   line=["<html>"
+ 	"<head>"
+@@ -221,6 +222,7 @@
+       return 
+     end 
+     l=l+1;
++    w=strsubst(w,basepath,'');
+     w=strsubst(w,'\','/');
+     w=strsubst(w,'//','/');
+     line(l)="<dd><A HREF="""+w+""">"+txt(k)+"</A></dd>"
+@@ -263,6 +265,7 @@
+ // contents.htm 
+ //-------------------------------------
+   [lhs,rhs]=argn(0) 
++  path=get_absolute_file_path("html.xsl")+"html.xsl"
+   if rhs <= 0 then 
+     dirs = dirname(%helps(:,1));
+     base = basename(%helps(:,1));
+@@ -270,6 +273,7 @@
+      dirs = dirname(dirs1)
+      base = basename(dirs1)
+   end
++  basepath=dirname(path)+"/";
+   // help in the std man directory 
+   std= grep(dirs,SCI)
+   n=size(dirs,'*')
+@@ -296,7 +300,7 @@
+ 	   lkey=part(lwhatis,i(2)+1:j-1);
+ 	   full_whatis_name=[full_whatis_name;lkey];
+ 	 end
+-	 whatis=strsubst(whatis,"HREF=""","HREF="""+base(k)+"/");
++	 whatis=strsubst(whatis,"HREF=""","HREF="""+strsubst(dirs(k),basepath,'')+"/");
+ 	 whatis=strsubst(whatis,'//','/');
+ 	 full_whatis=[full_whatis;whatis];
+       end 
