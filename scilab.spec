@@ -12,7 +12,7 @@ Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlab
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	3.1.1
-Release:	2
+Release:	3
 License:	distributable
 Group:		Applications/Math
 Source0:	http://scilabsoft.inria.fr/download/stable/%{name}-%{version}-src.tar.gz
@@ -25,6 +25,7 @@ Patch2:		%{name}-sh5.patch
 Patch3:		%{name}-amd64.patch
 Patch4:		%{name}-typo.patch
 Patch5:		%{name}-lib64.patch
+Patch6:		%{name}-docbasedir.patch
 URL:		http://www.scilab.org/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel
@@ -82,6 +83,7 @@ Dokumentacja i pliki demo dla scilab.
 %if %{_lib} == "lib64"
 %patch5 -p1
 %endif
+%patch6 -p1
 
 head -n 438 aclocal.m4 > acinclude.m4
 tail -n 68 aclocal.m4 >>acinclude.m4
