@@ -1,0 +1,19 @@
+--- routines/gzvt2/Makefile.in.orig	2004-10-05 20:45:17.000000000 +0000
++++ routines/gzvt2/Makefile.in	2005-12-27 19:38:01.000000000 +0000
+@@ -10,6 +10,7 @@
+ 
+ TERM_NAME=@TERM_NAME@
+ LDFLAGS=$(@TERM_LDFLAGS@)
++CFLAGS=$(CC_OPTIONS)
+ 
+ all	::  ../../bin/zterm 
+ 
+@@ -17,7 +18,7 @@
+ 	@$(RM) -f zterm gtkplug 
+ 
+ ../../bin/zterm :  $(TERM_NAME).c 
+-	$(CC) -o ../../bin/zterm $(TERM_NAME).c  $(LDFLAGS) 
++	$(CC) $(CFLAGS) -o ../../bin/zterm $(TERM_NAME).c  $(LDFLAGS) 
+ 
+ distclean::
+ 	$(RM) -f ../../bin/zterm gtkplug 	
