@@ -1,4 +1,5 @@
 # TODO:
+# - many things to check, more to do
 # - added bcond with atlas
 # - make demos works (doesn't see SCI path)
 # - use system pvm
@@ -11,19 +12,18 @@ Summary:	Program for scientifical and technical computations, compatible with Ma
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
-Version:	3.1.1
-Release:	3
+Version:	4.0
+Release:	0.1
 License:	distributable
 Group:		Applications/Math
 Source0:	http://scilabsoft.inria.fr/download/stable/%{name}-%{version}-src.tar.gz
-# Source0-md5:	8bd6e750681fc6b2f524b46876dc0887
+# Source0-md5:	26e1c1480453bb1021bcea3ac412ad19
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-DESTDIR.patch
 Patch2:		%{name}-sh5.patch
 Patch3:		%{name}-amd64.patch
-Patch4:		%{name}-typo.patch
 Patch5:		%{name}-lib64.patch
 Patch6:		%{name}-docbasedir.patch
 Patch7:		%{name}-cflags.patch
@@ -38,11 +38,11 @@ BuildRequires:	libtool
 BuildRequires:	libzvt-devel >= 2.0
 BuildRequires:	ncurses-devel
 BuildRequires:	ocaml
-BuildRequires:	sablotron
 BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pvm-devel
 BuildRequires:	readline-devel
+BuildRequires:	sablotron
 BuildRequires:	tcl-devel
 BuildRequires:	tk-devel
 BuildRequires:	vte-devel
@@ -74,17 +74,28 @@ Documentation and demos for scilab.
 %description doc -l pl
 Dokumentacja i pliki demo dla scilab.
 
+%package examples
+Summary:	Scilab examples
+Summary(pl):	Przyk³ady dla scilab
+Group:		Applications/Math
+Requires:	%{name} = %{version}-%{release}
+
+%description examples
+Examples and demos for scilab.
+
+%description examples -l pl
+Przyk³ady i pliki demo dla scilab.
+
 %prep
 %setup -q
 #%patch0 -p1
 #%patch1 -p1
 %patch2 -p1
 #%patch3 -p1
-%patch4 -p1
 %if %{_lib} == "lib64"
-%patch5 -p1
+    %patch5 -p1
 %endif
-%patch6 -p1
+#%patch6 -p1
 %patch7 -p0
 
 head -n 438 aclocal.m4 > acinclude.m4
@@ -93,20 +104,17 @@ sed -e 's@-march=athlon64@@g' -i configure.in
 sed -e 's@$PVMROOT/lib/pvmgetarch@%{_bindir}/pvmgetarch@g' -i configure.in
 
 %build
-cp -f /usr/share/automake/config.sub config
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
+#cp -f /usr/share/automake/config.sub config
+#%{__libtoolize}
+#%{__aclocal}
+#%{__autoconf}
 %configure \
-	--disable-static \
 	--enable-shared \
 	--with-tcl-library=%{_libdir} \
-	--with-tk \
+	--with-tcl-include=%{_includedir} \
 	--with-tk-library=%{_libdir} \
-	--with-xawd3d \
+	--with-tk-include=%{_includedir} \
 	--without-java \
-	--with-ocaml \
-	--with-pvm \
 	--with-pvm-include=%{_includedir} \
 	--with-pvm-library=%{_libdir} \
 %{?with_gtk2:--with-gtk2}
@@ -116,7 +124,7 @@ cp -f /usr/share/automake/config.sub config
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
-	$RPM_BUILD_ROOT{%{_examplesdir}/scilab,%{_appdefsdir}} \
+	$RPM_BUILD_ROOT{%{_examplesdir}/%{name},%{_appdefsdir}} \
 	$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/bin \
 	$RPM_BUILD_ROOT%{_desktopdir} \
 	$RPM_BUILD_ROOT%{_pixmapsdir}
@@ -126,10 +134,11 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}/%{name}-%{version}} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	X11BASE=$RPM_BUILD_ROOT%{_prefix} \
 	SCIDIR=$RPM_BUILD_ROOT%{_libdir}/%{name}-%{version} \
-	BSD_INSTALL_DATA=/usr/bin/install
+	BSD_INSTALL_DATA=%{_bindir}/install
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/%{name}.desktop
 install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}
+
 mv -f $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/{X11_defaults,contrib,demos,macros,man,maple,routines,tcl,.binary,scilab*} \
 	$RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 
@@ -155,10 +164,10 @@ find $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/macros -name Makefile\* -exec
 find $RPM_BUILD_ROOT -name .cvsignore -exec rm -f {} \;
 find man -name .cvsignore -exec rm -f {} \;
 
-mv $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/examples/ $RPM_BUILD_ROOT%{_examplesdir}/scilab
+mv $RPM_BUILD_ROOT%{_libdir}/%{name}-%{version}/examples/ $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 #Clean if not packing
-rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/man
+#rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/man
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -167,69 +176,70 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ACKNOWLEDGEMENTS license.txt README_Unix CHANGES
 %lang(fr) %doc licence.txt
+
 %attr(755,root,root) %{_bindir}/scilab
+
 %dir %{_libdir}/%{name}-%{version}
-#%%attr(755,root,root) %{_libdir}/%{name}-%{version}/libtool
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/libtool
+
 %dir %{_libdir}/%{name}-%{version}/bin
-%dir %{_libdir}/%{name}-%{version}/pvm3
-%{_libdir}/%{name}-%{version}/bin/.scicos_pal
-%{_libdir}/%{name}-%{version}/bin/Blatdoc
-%{_libdir}/%{name}-%{version}/bin/Blatdocs
 %attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/BEpsf
 %attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/Blatexpr*
 %attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/Blpr
 %attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/S*
 %attr(755,root,root) %{_libdir}/%{name}-%{version}/bin/[a-z]*
+%{_libdir}/%{name}-%{version}/bin/.scicos_pal
+%{_libdir}/%{name}-%{version}/bin/Blatdoc
+%{_libdir}/%{name}-%{version}/bin/Blatdocs
+
+%dir %{_libdir}/%{name}-%{version}/pvm3
 %attr(755,root,root) %{_libdir}/%{name}-%{version}/pvm3/*
-%{_libdir}/%{name}-%{version}/contrib
+
+### links
 %{_libdir}/%{name}-%{version}/imp
-%{_libdir}/%{name}-%{version}/macros
+%dir %{_libdir}/%{name}-%{version}/macros
 %{_libdir}/%{name}-%{version}/man
 %{_libdir}/%{name}-%{version}/maple
 %{_libdir}/%{name}-%{version}/routines
 %{_libdir}/%{name}-%{version}/scilab.quit
 %{_libdir}/%{name}-%{version}/scilab.star
-%dir %{_libdir}/%{name}-%{version}/tcl
-%{_libdir}/%{name}-%{version}/X11_defaults
+%{_libdir}/%{name}-%{version}/util
+
+%dir %{_libdir}/%{name}-%{version}/scripts
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/scripts/B*
+%attr(755,root,root) %{_libdir}/%{name}-%{version}/scripts/sc*
+
 %dir %{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}/X11_defaults
 %{_datadir}/%{name}-%{version}/contrib
-%{_datadir}/%{name}-%{version}/demos
-%dir %{_datadir}/%{name}-%{version}/macros
-%{_datadir}/%{name}-%{version}/macros/[a-z]*
-%{_datadir}/%{name}-%{version}/macros/*.c
-%{_datadir}/%{name}-%{version}/macros/HighLevelPlotting
+%{_datadir}/%{name}-%{version}/macros
 %{_datadir}/%{name}-%{version}/maple
 %{_datadir}/%{name}-%{version}/routines
-%dir %{_datadir}/%{name}-%{version}/tcl
-#it's binary file
-%attr(755,root,root) %{_datadir}/%{name}-%{version}/tcl/browsehelpexe
+%{_datadir}/%{name}-%{version}/scilab.*
 
+%dir %{_datadir}/%{name}-%{version}/tcl
+%attr(755,root,root) %{_datadir}/%{name}-%{version}/tcl/browsehelpexe
 %{_datadir}/%{name}-%{version}/tcl/*.*
 %{_datadir}/%{name}-%{version}/tcl/Makefile
 %{_datadir}/%{name}-%{version}/tcl/ged
 %{_datadir}/%{name}-%{version}/tcl/sciGUI
 %{_datadir}/%{name}-%{version}/tcl/scipadsources
 %{_datadir}/%{name}-%{version}/tcl/utils
-# %{_datadir}/%{name}-%{version}/tcl/words
-%{_datadir}/%{name}-%{version}/.binary
-%{_datadir}/%{name}-%{version}/scilab*
-%dir %{_libdir}/%{name}-%{version}/scripts
-%attr(755,root,root) %{_libdir}/%{name}-%{version}/scripts/B*
-%attr(755,root,root) %{_libdir}/%{name}-%{version}/scripts/sc*
-%{_libdir}/%{name}-%{version}/util
+%{_datadir}/%{name}-%{version}/tcl/browsehelp
+%{_datadir}/%{name}-%{version}/demos
 %{_desktopdir}/*
 %{_pixmapsdir}/%{name}.png
 
 %files doc
 %defattr(644,root,root,755)
-%lang(fr) %doc man/fr
-%doc man/eng man/*.dtd
-%{_examplesdir}/scilab
-%{_libdir}/%{name}-%{version}/demos
-%dir %{_libdir}/%{name}-%{version}/tests
-%{_libdir}/%{name}-%{version}/tests/*.sce
-%{_libdir}/%{name}-%{version}/tests/*.ref
-%{_libdir}/%{name}-%{version}/tests/*.tst
-%attr(755,root,root) %{_libdir}/%{name}-%{version}/tests/*.sh
+%lang(fr) %doc %{_datadir}/%{name}-%{version}/man/fr
+%lang(en) %doc %{_datadir}/%{name}-%{version}/man/eng
+%doc %{_datadir}/%{name}-%{version}/man/images
+%doc %{_datadir}/%{name}-%{version}/man/BuildChm
+%doc %{_datadir}/%{name}-%{version}/man/*.dtd
+%doc %{_datadir}/%{name}-%{version}/man/CheckHelp
 #%%{_libdir}/%{name}-%{version}/config
+
+%files examples
+%defattr(644,root,root,755)
+%{_examplesdir}/%{name}
