@@ -6,7 +6,12 @@
 # - amd64 version(problem with -fPIC)
 #
 # Conditional build:
-%bcond_without	gtk2		# without gtk2
+%bcond_with	gtk2		# with gtk2
+%bcond_with	xawd3d		# with xawd3d
+%bcond_with	x		# with x
+%bcond_with	f2c		# with f2c
+%bcond_without	pvm		# without pvm
+%bcond_without	ocaml		# without ocaml
 
 Summary:	Program for scientifical and technical computations, compatible with Matlab
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
@@ -29,7 +34,8 @@ Patch6:		%{name}-docbasedir.patch
 Patch7:		%{name}-cflags.patch
 URL:		http://www.scilab.org/
 BuildRequires:	XFree86-devel
-BuildRequires:	Xaw3d-devel
+%{?with_xawd3d:BuildRequires:	Xaw3d-devel}
+%{?with_f2c:BuildRequires:	f2c}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gcc-g77
@@ -37,10 +43,10 @@ BuildRequires:	libgtkhtml-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	libzvt-devel >= 2.0
 BuildRequires:	ncurses-devel
-BuildRequires:	ocaml
+%{?with_ocaml:BuildRequires:	ocaml}
 BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
-BuildRequires:	pvm-devel
+%{?with_pvm:BuildRequires:	pvm-devel}
 BuildRequires:	readline-devel
 BuildRequires:	sablotron
 BuildRequires:	tcl-devel
@@ -117,7 +123,12 @@ sed -e 's@$PVMROOT/lib/pvmgetarch@%{_bindir}/pvmgetarch@g' -i configure.in
 	--without-java \
 	--with-pvm-include=%{_includedir} \
 	--with-pvm-library=%{_libdir} \
-%{?with_gtk2:--with-gtk2}
+	%{?with_gtk2:--with-gtk2} \
+	%{?with_xawd3d:--with-xawd3d} \
+	%{?with_x:--with-x} \
+	%{?with_f2c:--with-f2c} \
+	%{!?with_pvm:--without-pvm} \
+	%{!?with_ocaml:--without-ocaml}
 
 %{__make} -j1 all
 
@@ -192,8 +203,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}-%{version}/bin/Blatdoc
 %{_libdir}/%{name}-%{version}/bin/Blatdocs
 
-%dir %{_libdir}/%{name}-%{version}/pvm3
-%attr(755,root,root) %{_libdir}/%{name}-%{version}/pvm3/*
+%{?with_pvm:%dir %{_libdir}/%{name}-%{version}/pvm3}
+%{?with_pvm:%attr(755,root,root) %{_libdir}/%{name}-%{version}/pvm3/*}
 
 ### links
 %{_libdir}/%{name}-%{version}/imp
