@@ -238,7 +238,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-%{version}/tcl/utils
 %{_datadir}/%{name}-%{version}/tcl/browsehelp
 %{_datadir}/%{name}-%{version}/demos
-%{_desktopdir}/*
+%{_desktopdir}/*.desktop
 %{_pixmapsdir}/%{name}.png
 
 %files doc
