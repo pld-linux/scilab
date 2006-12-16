@@ -1,97 +1,243 @@
-diff -ur scilab-3.0.old/configure.in scilab-3.0/configure.in
---- scilab-3.0.old/configure.in	2004-07-30 20:18:47.000000000 +0200
-+++ scilab-3.0/configure.in	2004-07-30 21:09:25.000000000 +0200
-@@ -358,7 +358,7 @@
+--- scilab-4.1/configure.in.orig	2006-12-16 09:50:11.000000000 +0100
++++ scilab-4.1/configure.in	2006-12-16 10:48:04.000000000 +0100
+@@ -242,19 +242,19 @@
+     # C compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS="$CFLAGS -DNDEBUG"
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+       fi
+     else
+       CC=cc
+-      CC_OPTIONS='-std -O -DNDEBUG -ieee_with_inexact'
++      CC_OPTIONS='-std $CFLAGS -DNDEBUG -ieee_with_inexact'
+       CC_LDFLAGS='-ieee_with_inexact'
+     fi
+     #fortran compiler
+     if test "$WITH_G77" = yes; then    
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS="$CFLAGS"
+       FC_OPTIONS_O0=
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS=-g
+@@ -265,7 +265,7 @@
+         AC_MSG_ERROR([Unable to configure: Fortran f77 compiler not found])
+       fi
+       FC="$F77"
+-      FC_OPTIONS='-O -fpe3'
++      FC_OPTIONS='$CFLAGS -fpe3'
+       FC_OPTIONS_O0='-fpe3'
+       FC_LDFLAGS=
+       FC_USE_CDEC='   '
+@@ -283,7 +283,7 @@
+   alpha*-dec-osf*)
+     # standard compilers
+     CC=cc
+-    CC_OPTIONS='-O -DNDEBUG -ieee_with_inexact'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -ieee_with_inexact'
+     CC_LDFLAGS='-ieee_with_inexact'
+     if test "$WITH_G77" != yes; then    
+       #AC_CHECK_PROG(F77,f77,yes,no)
+@@ -294,7 +294,7 @@
+       FC="$F77"
+     fi
+     #FC="$F77"
+-    FC_OPTIONS='-O -fpe3 -switch nosqrt_recip'
++    FC_OPTIONS='$CFLAGS -fpe3 -switch nosqrt_recip'
+     FC_OPTIONS_O0='-fpe3 -switch nosqrt_recip'
+     FC_LDFLAGS=
+     FC_USE_CDEC='   '
+@@ -307,14 +307,14 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS='$CFLAGS -DNDEBUG'
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+       fi
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS='$CFLAGS'
+       FC_OPTIONS_O0=
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS=-g
+@@ -349,14 +349,14 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS='$CFLAGS -DNDEBUG'
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+       fi
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS='$CFLAGS'
+       FC_OPTIONS_O0=
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS=-g
+@@ -368,7 +368,7 @@
+   sparc-*-sunos*)
+     # standard compilers
+     CC=cc
+-    CC_OPTIONS=-O -DNDEBUG
++    CC_OPTIONS='$CFLAGS -DNDEBUG'
+     CC_LDFLAGS=
+     CC_PICFLAGS=-PIC
+     if test "$WITH_G77" != yes; then    
+@@ -380,7 +380,7 @@
+       FC="$F77"
+     fi
+     #FC="$F77"
+-    FC_OPTIONS=-O
++    FC_OPTIONS='$CFLAGS'
+     FC_OPTIONS_O0=
+     FC_LDFLAGS=
+     FC_PICFLAGS=-PIC
+@@ -393,7 +393,7 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS='$CFLAGS -DNDEBUG'
+       CC_PICFLAGS=
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+@@ -401,7 +401,7 @@
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS='$CFLAGS'
+       FC_OPTIONS_O0=
+       FC_PICFLAGS=
+       if test "$enable_debug" = yes; then 
+@@ -415,7 +415,7 @@
+   *-*-solaris*)
+     # standard compilers
+     CC=cc
+-    CC_OPTIONS='-O -DNDEBUG -DSVR4 -DSYSV -Dsolaris'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -DSVR4 -DSYSV -Dsolaris'
+     CC_LDFLAGS=
+     if test "$WITH_G77" != yes; then    
+       #AC_CHECK_PROG(F77,f77,yes,no)
+@@ -426,7 +426,7 @@
+       FC="$F77"
+     fi
+     #FC="$F77"
+-    FC_OPTIONS=-O
++    FC_OPTIONS='$CFLAGS'
+     FC_OPTIONS_O0=
+     FC_LDFLAGS=
+     LD=ld
+@@ -466,7 +466,7 @@
        [LIEEELIB=-lieee])
      GCC=yes
      CC=gcc
--    CC_OPTIONS='-O -Dlinux -fwritable-strings'
-+    CC_OPTIONS="$CFLAGS -Dlinux -fwritable-strings -DNARROWPROTO"
+-    CC_OPTIONS='-O -DNDEBUG -Dlinux -fwritable-strings'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -Dlinux -fwritable-strings -DNARROWPROTO'
      CC_LDFLAGS=$LIEEELIB
      # find Fortran compiler
      # g77 already asked and found: good
-@@ -388,7 +388,7 @@
+@@ -496,7 +496,7 @@
          fi
        fi
      fi
 -    FC_OPTIONS=-O
 +    FC_OPTIONS="$CFLAGS"
      FC_OPTIONS_O0=
-     FC_LDFLAGS="$LIEEELIB -ldl -rdynamic"
+     FC_LDFLAGS=$LIEEELIB
      LD=ld
-@@ -403,7 +403,7 @@
-   sparc-*-sunos*)
-     # standard compilers
-     CC=cc
--    CC_OPTIONS=-O
-+    CC_OPTIONS="$CFLAGS"
-     CC_LDFLAGS=
-     CC_PICFLAGS=-PIC
-     if test "$WITH_G77" != yes; then    
-@@ -415,7 +415,7 @@
-       FC="$F77"
-     fi
-     #FC="$F77"
--    FC_OPTIONS=-O
-+    FC_OPTIONS="$CFLAGS"
-     FC_OPTIONS_O0=
-     FC_LDFLAGS=
-     FC_PICFLAGS=-PIC
-@@ -428,7 +428,7 @@
-     # GNU compilers
-     if test "$WITH_GCC" = yes; then
-       CC=gcc
--      CC_OPTIONS=-O
-+      CC_OPTIONS="$CFLAGS"
-       CC_PICFLAGS=
-       if test "$enable_debug" = yes; then 
-         CC_OPTIONS=-g
-@@ -436,7 +436,7 @@
-     fi
-     if test "$WITH_G77" = yes; then
-       FC=g77
--      FC_OPTIONS=-O
-+      FC_OPTIONS="$CFLAGS"
-       FC_OPTIONS_O0=
-       FC_PICFLAGS=
-       if test "$enable_debug" = yes; then 
-@@ -552,10 +552,10 @@
-        GCC=no
-        CC=$ICC
-        FC=$IFC
--       CC_OPTIONS='-O -Dlinux -DNARROWPROTO -mp -pc64 -ffnalias -falias '
-+       CC_OPTIONS="$CFLAGS -Dlinux -DNARROWPROTO -mp -pc64 -ffnalias -falias"
-        CC_PICFLAGS="-fPIC"
- # -cm remove comments displays, -w90  -w95 remove warnings abort f90 f95 non standard
--       FC_OPTIONS="-O -cm -w90 -w95 -mp -pc64 -ffnalias -falias"
-+       FC_OPTIONS="$CFLAGS -cm -w90 -w95 -mp -pc64 -ffnalias -falias"
-        FC_OPTIONS_O0="-cm  -w90 -w95 -mp -pc64 -ffnalias -falias"
-        if test "$enable_debug" = yes; then 
-          CC_OPTIONS='-g -Wall -Dlinux  -DNARROWPROTO  -mp -pc64 -ffnalias -falias'
+@@ -522,10 +522,10 @@
+ 		GCC=no
+ 		CC=$ICC
+ 		FC=$IFC
+-		CC_OPTIONS='-O -DNDEBUG -Dlinux -DNARROWPROTO -mp'
++		CC_OPTIONS='$CFLAGS -DNDEBUG -Dlinux -DNARROWPROTO -mp'
+ 		CC_PICFLAGS="-fPIC"
+ 		# -cm remove comments displays, -w90  -w95 remove warnings abort f90 f95 non standard
+-		FC_OPTIONS="-O -cm -w90 -w95 -mp "
++		FC_OPTIONS="$CFLAGS -cm -w90 -w95 -mp "
+ 		FC_OPTIONS_O0="-cm  -w90 -w95 -mp "
+ 		if test "$enable_debug" = yes; then
+ 			CC_OPTIONS='-g -Wall -Dlinux  -DNARROWPROTO  -mp '
+@@ -559,7 +559,7 @@
+ 				FC_OPTIONS="-g $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 				FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 			else
+-				FC_OPTIONS="-O $CC_PLAT_OPTIONS $FC_PICFLAGS"
++				FC_OPTIONS="$CFLAGS $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 				FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 			fi
+ 		elif test "$WITH_GFORTRAN" = yes; then
 @@ -568,7 +568,7 @@
-     else
-        GCC=yes
-        CC=gcc
--       CC_OPTIONS='-O -Dlinux -fwritable-strings -DNARROWPROTO'
-+       CC_OPTIONS="$CFLAGS -Dlinux -fwritable-strings -DNARROWPROTO"
-        CC_LDFLAGS=$LIEEELIB
-        CC_PICFLAGS=-fPIC
-        # find Fortran compiler
-@@ -601,7 +601,7 @@
-            fi
-          fi
-        fi
--       FC_OPTIONS=-O
-+       FC_OPTIONS="$CFLAGS"
-        FC_OPTIONS_O0=
-        FC_LDFLAGS="$LIEEELIB -ldl -rdynamic"
-        if test "$enable_debug" = yes; then 
-@@ -623,10 +623,10 @@
+ 				FC_OPTIONS="-g -ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 				FC_OPTIONS_O0="-ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 			else
+-				FC_OPTIONS="-O -ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
++				FC_OPTIONS="$CFLAGS -ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 				FC_OPTIONS_O0="-ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 			fi
+ 			AC_DEFINE(G95_FORTRAN)
+@@ -584,7 +584,7 @@
+ 				FC_OPTIONS="-g $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 				FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 			else
+-				FC_OPTIONS="-O $CC_PLAT_OPTIONS $FC_PICFLAGS"
++				FC_OPTIONS="$CFLAGS $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 				FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 			fi
+ 		else
+@@ -597,7 +597,7 @@
+ 					FC_OPTIONS="-g $CC_PLAT_OPTIONS"
+ 					FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 				else
+-					FC_OPTIONS="-O $CC_PLAT_OPTIONS"
++					FC_OPTIONS="$CFLAGS $CC_PLAT_OPTIONS"
+ 					FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 				fi
+ 			else
+@@ -610,7 +610,7 @@
+ 						FC_OPTIONS="-g -ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 						FC_OPTIONS_O0="-ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 					else
+-						FC_OPTIONS="-O -ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
++						FC_OPTIONS="$CFLAGS -ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 						FC_OPTIONS_O0="-ff2c $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 					fi
+ 				else
+@@ -623,7 +623,7 @@
+ 							FC_OPTIONS="-g $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 							FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 						else
+-							FC_OPTIONS="-O $CC_PLAT_OPTIONS $FC_PICFLAGS"
++							FC_OPTIONS="$CFLAGS $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 							FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS "
+ 						fi
+ 					else
+@@ -636,7 +636,7 @@
+ 								FC_OPTIONS="-g $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 								FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 							else
+-								FC_OPTIONS="-O $CC_PLAT_OPTIONS $FC_PICFLAGS"
++								FC_OPTIONS="$CFLAGS $CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 								FC_OPTIONS_O0="$CC_PLAT_OPTIONS $FC_PICFLAGS"
+ 							fi
+ 						else
+@@ -662,10 +662,10 @@
         GCC=no
         CC=$ICC
         FC=$IFC
--       CC_OPTIONS='-O -Dlinux -DNARROWPROTO -mp'
-+       CC_OPTIONS="$CFLAGS -Dlinux -DNARROWPROTO -mp"
+-       CC_OPTIONS='-O -DNDEBUG -Dlinux -DNARROWPROTO -mp'
++       CC_OPTIONS='$CFLAGS -DNDEBUG -Dlinux -DNARROWPROTO -mp'
         CC_PICFLAGS="-fPIC"
  # -cm remove comments displays, -w90  -w95 remove warnings abort f90 f95 non standard
 -       FC_OPTIONS="-O -cm -w90 -w95 -mp "
@@ -99,66 +245,317 @@ diff -ur scilab-3.0.old/configure.in scilab-3.0/configure.in
         FC_OPTIONS_O0="-cm  -w90 -w95 -mp "
         if test "$enable_debug" = yes; then 
           CC_OPTIONS='-g -Wall -Dlinux  -DNARROWPROTO  -mp '
-@@ -639,7 +639,7 @@
+@@ -678,7 +678,7 @@
      else
         GCC=yes
-        CC=cc
--       CC_OPTIONS='-O -Dlinux -fwritable-strings -DNARROWPROTO'
-+       CC_OPTIONS="$CFLAGS -Dlinux -fwritable-strings -DNARROWPROTO"
+        CC=gcc
+-       CC_OPTIONS='-O -DNDEBUG -Dlinux  -DNARROWPROTO'
++       CC_OPTIONS='$CFLAGS -DNDEBUG -Dlinux  -DNARROWPROTO'
         CC_LDFLAGS=$LIEEELIB
         CC_PICFLAGS=-fPIC
         # find Fortran compiler
-@@ -672,7 +672,7 @@
+@@ -711,7 +711,7 @@
             fi
           fi
         fi
 -       FC_OPTIONS=-O
-+       FC_OPTIONS="$CFLAGS"
++       FC_OPTIONS='$CFLAGS'
         FC_OPTIONS_O0=
         FC_LDFLAGS="$LIEEELIB -ldl -rdynamic -Wl,-relax"
         LD=ld
-@@ -689,7 +689,7 @@
+@@ -728,7 +728,7 @@
      MALLOC=malloc.o
      GCC=yes
-     CC=cc
--    CC_OPTIONS='-O -mieee-with-inexact -Dlinux -fwritable-strings'
-+    CC_OPTIONS="$CFLAGS -mieee-with-inexact -Dlinux -fwritable-strings"
+     CC=gcc
+-    CC_OPTIONS='-O -DNDEBUG -mieee-with-inexact -Dlinux -fwritable-strings'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -mieee-with-inexact -Dlinux -fwritable-strings'
      CC_LDFLAGS='-ldl -rdynamic -mieee-with-inexact'
      CC_PICFLAGS=-fPIC
      # find Fortran compiler
-@@ -720,7 +720,7 @@
+@@ -759,7 +759,7 @@
          fi
        fi
      fi
 -    FC_OPTIONS='-O -mieee-with-inexact'
-+    FC_OPTIONS="$CFLAGS -mieee-with-inexact"
++    FC_OPTIONS='$CFLAGS -mieee-with-inexact'
      FC_OPTIONS_O0='-mieee-with-inexact'
      FC_LDFLAGS='-ldl -rdynamic -mieee-with-inexact'
      LD=ld
-@@ -738,7 +738,7 @@
+@@ -777,7 +777,7 @@
        [LIEEELIB=-lieee])
      GCC=yes
-     CC=cc
--    CC_OPTIONS='-O -D_GNU_SOURCE -Dlinux -fwritable-strings'
-+    CC_OPTIONS="$CFLAGS -D_GNU_SOURCE -Dlinux -fwritable-strings"
+     CC=gcc
+-    CC_OPTIONS='-O -DNDEBUG -D_GNU_SOURCE -Dlinux'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -D_GNU_SOURCE -Dlinux'
      CC_LDFLAGS=$LIEEELIB
      CC_PICFLAGS=-fPIC
      # find Fortran compiler
-@@ -769,7 +769,7 @@
+@@ -786,7 +786,7 @@
+       FC=g77
+     elif test "$WITH_GFORTRAN" = yes;then
+       FC=gfortran
+-      FC_OPTIONS="-O -ff2c"
++      FC_OPTIONS="$CFLAGS -ff2c"
+       FC_OPTIONS_O0="-ff2c"
+       FC_PICFLAGS=-fPIC
+       AC_DEFINE(G95_FORTRAN)
+@@ -814,7 +814,7 @@
          fi
        fi
      fi
 -    FC_OPTIONS=-O
-+    FC_OPTIONS="$CFLAGS"
++    FC_OPTIONS='$CFLAGS'
      FC_OPTIONS_O0=
      FC_LDFLAGS="$LIEEELIB -ldl -rdynamic"
      FC_PICFLAGS=-fPIC
-@@ -1456,6 +1456,8 @@
+@@ -836,10 +836,10 @@
+ 		GCC=no
+ 		CC=$ICC
+ 		FC=$IFC
+-		CC_OPTIONS='-O -DNDEBUG -Dlinux -DNARROWPROTO -mp -pc64 -ffnalias -falias '
++		CC_OPTIONS='$CFLAGS -DNDEBUG -Dlinux -DNARROWPROTO -mp -pc64 -ffnalias -falias '
+ 		CC_PICFLAGS="-fPIC"
+ 		# -cm remove comments displays, -w90  -w95 remove warnings abort f90 f95 non standard
+-		FC_OPTIONS="-O -cm -w90 -w95 -mp -pc64 -ffnalias -falias"
++		FC_OPTIONS="$CFLAGS -cm -w90 -w95 -mp -pc64 -ffnalias -falias"
+ 		FC_OPTIONS_O0="-cm  -w90 -w95 -mp -pc64 -ffnalias -falias"
+ 		if test "$enable_debug" = yes; then 
+ 			CC_OPTIONS='-g -Wall -Dlinux  -DNARROWPROTO  -mp -pc64 -ffnalias -falias'
+@@ -856,7 +856,7 @@
+ 		if test "$enable_debug" = yes; then
+ 			CC_OPTIONS='-g -Wall -Dlinux  -DNARROWPROTO'
+ 		else
+-			CC_OPTIONS='-O -DNDEBUG -Dlinux  -DNARROWPROTO'
++			CC_OPTIONS='$CFLAGS -DNDEBUG -Dlinux  -DNARROWPROTO'
+ 		fi
+ 		CC_LDFLAGS=$LIEEELIB
+ 		CC_PICFLAGS=-fPIC
+@@ -869,7 +869,7 @@
+ 				FC_OPTIONS="-g"
+ 				FC_OPTIONS_O0=""
+ 			else
+-				FC_OPTIONS="-O"
++				FC_OPTIONS="$CFLAGS"
+ 				FC_OPTIONS_O0=""
+ 			fi
+ 		elif test "$WITH_GFORTRAN" = yes;then
+@@ -878,7 +878,7 @@
+ 				FC_OPTIONS="-g -ff2c"
+ 				FC_OPTIONS_O0="-ff2c"
+ 			else
+-				FC_OPTIONS="-O -ff2c"
++				FC_OPTIONS="$CFLAGS -ff2c"
+ 				FC_OPTIONS_O0="-ff2c"
+ 			fi
+ 			FC_PICFLAGS=-fPIC
+@@ -895,7 +895,7 @@
+ 				FC_OPTIONS="-g"
+ 				FC_OPTIONS_O0=""
+ 			else
+-				FC_OPTIONS="-O"
++				FC_OPTIONS="$CFLAGS"
+ 				FC_OPTIONS_O0=""
+ 			fi
+ 		else
+@@ -908,7 +908,7 @@
+ 					FC_OPTIONS="-g"
+ 					FC_OPTIONS_O0=""
+ 				else
+-					FC_OPTIONS="-O"
++					FC_OPTIONS="$CFLAGS"
+ 					FC_OPTIONS_O0=""
+ 				fi
+ 			else
+@@ -921,7 +921,7 @@
+ 						FC_OPTIONS="-g -ff2c"
+ 						FC_OPTIONS_O0="-ff2c"
+ 					else
+-						FC_OPTIONS="-O -ff2c"
++						FC_OPTIONS="$CFLAGS -ff2c"
+ 						FC_OPTIONS_O0="-ff2c"
+ 					fi
+ 				else
+@@ -934,7 +934,7 @@
+ 							FC_OPTIONS="-g"
+ 							FC_OPTIONS_O0=""
+ 						else
+-							FC_OPTIONS="-O"
++							FC_OPTIONS="$CFLAGS"
+ 							FC_OPTIONS_O0=""
+ 						fi
+ 					else
+@@ -947,7 +947,7 @@
+ 								FC_OPTIONS="-g"
+ 								FC_OPTIONS_O0=""
+ 							else
+-								FC_OPTIONS="-O"
++								FC_OPTIONS="$CFLAGS"
+ 								FC_OPTIONS_O0=""
+ 							fi
+ 						else
+@@ -991,14 +991,14 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS='$CFLAGS -DNDEBUG'
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+       fi
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS='$CFLAGS'
+       FC_OPTIONS_O0=
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS=-g
+@@ -1010,7 +1010,7 @@
+   mips-sgi-irix*)
+     # standard compilers
+     CC=cc
+-    CC_OPTIONS='-O -DNDEBUG -DSYSV -DSVR4'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -DSYSV -DSVR4'
+     CC_LDFLAGS=
+     if test "$WITH_G77" != yes; then    
+       #AC_CHECK_PROG(F77,f77,yes,no)
+@@ -1021,7 +1021,7 @@
+       FC="$F77"
+     fi
+     #FC="$F77"
+-    FC_OPTIONS='-O '
++    FC_OPTIONS='$CFLAGS '
+     FC_OPTIONS_O0=
+ 
+     FC_LDFLAGS=
+@@ -1034,14 +1034,14 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS='$CFLAGS -DNDEBUG'
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+       fi
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS='$CFLAGS'
+       FC_OPTIONS_O0=
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS=-g
+@@ -1055,7 +1055,7 @@
+     # standard compilers
+     HPPA_OLD=-Dhppa_old
+     CC=cc
+-    CC_OPTIONS='-O -DNDEBUG -DSYSV -Dhpux'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -DSYSV -Dhpux'
+     CC_LDFLAGS='-Wl,-a,archive'
+     if test "$WITH_G77" != yes; then    
+       #AC_CHECK_PROG(F77,fort77,yes,no)
+@@ -1066,7 +1066,7 @@
+       FC="$F77"
+     fi
+     #FC="$F77"
+-    FC_OPTIONS='-O +Obb1200 +E4'
++    FC_OPTIONS='$CFLAGS +Obb1200 +E4'
+     FC_OPTIONS_O0='+Obb1200 +E4'
+     FC_LDFLAGS='-Wl,-a,archive'
+     LD=ld
+@@ -1078,14 +1078,14 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS='$CFLAGS -DNDEBUG'
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+       fi
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS='$CFLAGS'
+       FC_OPTIONS_O0=
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS=-g
+@@ -1098,7 +1098,7 @@
+   *-*-hpux10.*)
+     # standard compilers
+     CC=cc
+-    CC_OPTIONS='-O -DNDEBUG -DSYSV -Dhpux +Z +DAportable'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -DSYSV -Dhpux +Z +DAportable'
+     CC_LDFLAGS='-Wl,+vnocompatwarnings,-E /usr/lib/libdld.sl'
+     if test "$WITH_G77" != yes; then    
+       #AC_CHECK_PROG(F77,fort77,yes,no)
+@@ -1122,14 +1122,14 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS='$CFLAGS -DNDEBUG'
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+       fi
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS='$CFLAGS'
+       FC_OPTIONS_O0=
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS=-g
+@@ -1143,7 +1143,7 @@
+     SONAME=sl
+     # standard compilers
+     CC=cc
+-    CC_OPTIONS='-O -DNDEBUG -DSYSV -Dhpux -Dhppa +Z +DAportable'
++    CC_OPTIONS='$CFLAGS -DNDEBUG -DSYSV -Dhpux -Dhppa +Z +DAportable'
+     CC_LDFLAGS='-Wl,+vnocompatwarnings,-E /usr/lib/libdld.sl'
+     if test "$WITH_G77" != yes; then    
+       AC_CHECK_PROGS(F77,fort77 f77 f90 f2c-f77,no)
+@@ -1170,14 +1170,14 @@
+     # GNU compilers
+     if test "$WITH_GCC" = yes; then
+       CC=gcc
+-      CC_OPTIONS=-O -DNDEBUG
++      CC_OPTIONS='$CFLAGS -DNDEBUG'
+       if test "$enable_debug" = yes; then 
+         CC_OPTIONS=-g
+       fi
+     fi
+     if test "$WITH_G77" = yes; then
+       FC=g77
+-      FC_OPTIONS=-O
++      FC_OPTIONS='$CFLAGS'
+       FC_OPTIONS_O0=
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS=-g
+@@ -1258,7 +1258,7 @@
+     EXAMPLES_TESTS='$(SUBDIRS1)'
+     GCC=yes
+     CC=gcc 
+-    CC_OPTIONS='-mno-cygwin -mieee-fp -O -DNDEBUG -fwritable-strings  -Wall'
++    CC_OPTIONS='-mno-cygwin -mieee-fp $CFLAGS -DNDEBUG -fwritable-strings  -Wall'
+       if test "$enable_debug" = yes; then 
+ 	CC_OPTIONS='-mno-cygwin -g -fwritable-strings  -Wall'
+       fi
+@@ -1267,7 +1267,7 @@
+     if test "$WITH_G77" = yes; then
+       FC=g77
+     fi 
+-    FC_OPTIONS="-O -mno-cygwin"
++    FC_OPTIONS="$CFLAGS -mno-cygwin"
+     FC_OPTIONS_O0="-mno-cygwin"
+       if test "$enable_debug" = yes; then 
+         FC_OPTIONS="-g -mno-cygwin"
+@@ -1730,6 +1730,8 @@
  fi
  if test "$TERMCAPLIB" != no; then
    AC_DEFINE(HAVE_TERMCAP)
 +  CC_OPTIONS="$CC_OPTIONS -I/usr/include/ncurses"
-+  FC_OPTIONS="$FC_OPTIONS -I/usr/include/ncurses"
++  FC_OPTIONS="$FC_OPTIONS -I/usr/include/ncurses"  
  else
    TERMCAPLIB=
  fi

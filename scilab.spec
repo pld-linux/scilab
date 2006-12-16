@@ -4,6 +4,7 @@
 # - make demos works (doesn't see SCI path)
 # - use system pvm
 # - amd64 version(problem with -fPIC)
+# - find xorg* BRs
 #
 # Conditional build:
 %bcond_with	gtk2		# with gtk2
@@ -17,23 +18,21 @@ Summary:	Program for scientifical and technical computations, compatible with Ma
 Summary(pl):	Program do obliczeñ naukowo-in¿ynierskich, zgodny ze s³ynnym Matlabem
 Summary(pt_BR):	Linguagem de alto-nível para computação numérica
 Name:		scilab
-Version:	4.0
+Version:	4.1
 Release:	0.1
 License:	distributable
 Group:		Applications/Math
-Source0:	http://scilabsoft.inria.fr/download/stable/%{name}-%{version}-src.tar.gz
-# Source0-md5:	26e1c1480453bb1021bcea3ac412ad19
+Source0:        http://www.scilab.org/download/%{version}/%{name}-%{version}-src.tar.gz
+# Source0-md5:	3003fe63088558b931a11127fb8d8ccc
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-configure.patch
-Patch1:		%{name}-DESTDIR.patch
-Patch2:		%{name}-sh5.patch
-Patch3:		%{name}-amd64.patch
-Patch5:		%{name}-lib64.patch
-Patch6:		%{name}-docbasedir.patch
-Patch7:		%{name}-cflags.patch
+Patch1:		%{name}-sh5.patch
+Patch2:		%{name}-lib64.patch
+Patch3:		%{name}-docbasedir.patch
+Patch4:		%{name}-cflags.patch
 URL:		http://www.scilab.org/
-BuildRequires:	XFree86-devel
+BuildRequires:	xorg-lib-libX11-devel
 %{?with_xawd3d:BuildRequires:	Xaw3d-devel}
 %{?with_f2c:BuildRequires:	f2c}
 BuildRequires:	autoconf
@@ -94,15 +93,13 @@ Przyk³ady i pliki demo dla scilab.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
-%patch2 -p1
-#%patch3 -p1
+%patch0 -p1
+%patch1 -p1
 %if %{_lib} == "lib64"
-    %patch5 -p1
+    %patch2 -p1
 %endif
-#%patch6 -p1
-%patch7 -p0
+#%patch3 -p1
+%patch4 -p0
 
 head -n 438 aclocal.m4 > acinclude.m4
 tail -n 68 aclocal.m4 >>acinclude.m4
