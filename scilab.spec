@@ -15,8 +15,8 @@
 %bcond_without	ocaml		# without ocaml
 
 Summary:	Program for scientifical and technical computations, compatible with Matlab
-Summary(pl):	Program do obliczeÒ naukowo-inøynierskich, zgodny ze s≥ynnym Matlabem
-Summary(pt_BR):	Linguagem de alto-nÌvel para computaÁ„o numÈrica
+Summary(pl.UTF-8):   Program do oblicze≈Ñ naukowo-in≈ºynierskich, zgodny ze s≈Çynnym Matlabem
+Summary(pt_BR.UTF-8):   Linguagem de alto-n√≠vel para computa√ß√£o num√©rica
 Name:		scilab
 Version:	4.1
 Release:	0.1
@@ -61,35 +61,35 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Program for scientifical and technical computations, compatible with
 Matlab.
 
-%description -l pl
-Program do obliczeÒ naukowo-inøynierskich, zgodny ze s≥ynnym Matlabem.
+%description -l pl.UTF-8
+Program do oblicze≈Ñ naukowo-in≈ºynierskich, zgodny ze s≈Çynnym Matlabem.
 
-%description -l pt_BR
-Linguagem de alto-nÌvel para computaÁ„o numÈrica.
+%description -l pt_BR.UTF-8
+Linguagem de alto-n√≠vel para computa√ß√£o num√©rica.
 
 %package doc
 Summary:	Scilab documentation
-Summary(pl):	Dokumantacja dla scilab
+Summary(pl.UTF-8):   Dokumantacja dla scilab
 Group:		Applications/Math
 Requires:	%{name} = %{version}-%{release}
 
 %description doc
 Documentation and demos for scilab.
 
-%description doc -l pl
+%description doc -l pl.UTF-8
 Dokumentacja i pliki demo dla scilab.
 
 %package examples
 Summary:	Scilab examples
-Summary(pl):	Przyk≥ady dla scilab
+Summary(pl.UTF-8):   Przyk≈Çady dla scilab
 Group:		Applications/Math
 Requires:	%{name} = %{version}-%{release}
 
 %description examples
 Examples and demos for scilab.
 
-%description examples -l pl
-Przyk≥ady i pliki demo dla scilab.
+%description examples -l pl.UTF-8
+Przyk≈Çady i pliki demo dla scilab.
 
 %prep
 %setup -q
