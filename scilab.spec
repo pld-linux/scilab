@@ -15,8 +15,8 @@
 %bcond_without	ocaml		# without ocaml
 
 Summary:	Program for scientifical and technical computations, compatible with Matlab
-Summary(pl.UTF-8):   Program do obliczeń naukowo-inżynierskich, zgodny ze słynnym Matlabem
-Summary(pt_BR.UTF-8):   Linguagem de alto-nível para computação numérica
+Summary(pl.UTF-8):	Program do obliczeń naukowo-inżynierskich, zgodny ze słynnym Matlabem
+Summary(pt_BR.UTF-8):	Linguagem de alto-nível para computação numérica
 Name:		scilab
 Version:	4.1
 Release:	0.1
@@ -69,7 +69,7 @@ Linguagem de alto-nível para computação numérica.
 
 %package doc
 Summary:	Scilab documentation
-Summary(pl.UTF-8):   Dokumantacja dla scilab
+Summary(pl.UTF-8):	Dokumantacja dla scilab
 Group:		Applications/Math
 Requires:	%{name} = %{version}-%{release}
 
@@ -81,7 +81,7 @@ Dokumentacja i pliki demo dla scilab.
 
 %package examples
 Summary:	Scilab examples
-Summary(pl.UTF-8):   Przykłady dla scilab
+Summary(pl.UTF-8):	Przykłady dla scilab
 Group:		Applications/Math
 Requires:	%{name} = %{version}-%{release}
 
