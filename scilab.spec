@@ -18,12 +18,12 @@ Summary:	Program for scientifical and technical computations, compatible with Ma
 Summary(pl.UTF-8):	Program do obliczeń naukowo-inżynierskich, zgodny ze słynnym Matlabem
 Summary(pt_BR.UTF-8):	Linguagem de alto-nível para computação numérica
 Name:		scilab
-Version:	4.1
+Version:	4.1.1
 Release:	0.1
 License:	distributable
 Group:		Applications/Math
 Source0:        http://www.scilab.org/download/%{version}/%{name}-%{version}-src.tar.gz
-# Source0-md5:	3003fe63088558b931a11127fb8d8ccc
+# Source0-md5:	0b603c8e40334d0be97eb4ac104926bf
 Source1:	%{name}.desktop
 Source2:	%{name}.png
 Patch0:		%{name}-configure.patch
@@ -37,7 +37,7 @@ BuildRequires:	xorg-lib-libX11-devel
 %{?with_f2c:BuildRequires:	f2c}
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gcc-g77
+BuildRequires:	gcc-fortran
 BuildRequires:	libgtkhtml-devel >= 2.0
 BuildRequires:	libtool
 BuildRequires:	libzvt-devel >= 2.0
