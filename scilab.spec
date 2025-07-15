@@ -93,13 +93,13 @@ Przykłady i pliki demo dla scilab.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 %if %{_lib} == "lib64"
     %patch2 -p1
 %endif
 #%patch3 -p1
-%patch4 -p0
+%patch -P4 -p0
 
 head -n 438 aclocal.m4 > acinclude.m4
 tail -n 68 aclocal.m4 >>acinclude.m4
