@@ -98,7 +98,7 @@ Przykłady i pliki demo dla scilab.
 %if %{_lib} == "lib64"
     %patch2 -p1
 %endif
-#%patch3 -p1
+#%%patch3 -p1
 %patch -P4 -p0
 
 head -n 438 aclocal.m4 > acinclude.m4
